@@ -59,14 +59,15 @@ p {
 footer {
     background-color: #ccc;
     color: #333;
-    height: 15vh;
+    height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
     bottom: 0;
     width: 100%;
-}
+  }
+  
 
 @media screen and (max-width: 768px) {
     header {
@@ -81,3 +82,25 @@ footer {
         height: 20vh;
     }
 }
+
+#experience-button button {
+    background-color: #333;
+    color: #fff;
+    font-size: 1.2em;
+    padding: 0.5em 1em;
+    border: 2px solid #000; /* Add a black border */
+    border-radius: 50px; /* Make the button rounded */
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    position: absolute;
+    bottom: 13%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  #experience-button button:hover {
+    background-color: #fff; /* Change background color on hover */
+    color: #000; /* Change text color on hover */
+  }
+  
