@@ -4,103 +4,52 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-}
-
-a {
+  }
+  
+  a {
     text-decoration: none;
     color: #333;
-}
-
-/* Header Styles */
-
-header {
+  }
+  
+  /* Header Styles */
+  header {
     background-color: #333;
     color: #fff;
     height: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+  }
+  
 
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
+  /* Footer Styles */
 
-nav li {
-    margin: 0 1em;
-}
-
-nav a {
-    color: #fff;
-}
-
-/* Main Content Styles */
-
-main {
-    width: 65%;
-    margin: auto;
-    padding: 2em 0;
-}
-
-h1 {
-    text-align: center;
-    font-size: 2.5em;
-}
-
-p {
-    line-height: 1.5;
-}
-
-/* Footer Styles */
 
 footer {
     background-color: #ccc;
-    color: #333;
     height: 10vh;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
     bottom: 0;
     width: 100%;
-  }
-  
-
-@media screen and (max-width: 768px) {
-    header {
-        height: 15vh;
-    }
-    
-    main {
-        width: 90%;
-    }
-    
-    footer {
-        height: 20vh;
-    }
 }
 
-#experience-button button {
-    background-color: #333;
-    color: #fff;
-    font-size: 1.2em;
-    padding: 0.5em 1em;
-    border: 2px solid #000; /* Add a black border */
-    border-radius: 50px; /* Make the button rounded */
-    cursor: pointer;
-    width: auto;
-    height: auto;
-    position: absolute;
-    bottom: 13%;
-    left: 50%;
-    transform: translateX(-50%);
+footer p {
+    margin: 0;
+    font-size: small;
+}
+
+ 
+
+
+  .no-wrap {
+    white-space: nowrap;
   }
-  
-  #experience-button button:hover {
-    background-color: #fff; /* Change background color on hover */
-    color: #000; /* Change text color on hover */
+
+  .responsive-heading {
+    font-size: 2vw; /* adjust the value as needed */
   }
   
