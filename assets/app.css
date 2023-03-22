@@ -1,55 +1,83 @@
 /* Global Styles */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  a {
-    text-decoration: none;
-    color: #333;
-  }
-  
-  /* Header Styles */
-  header {
-    background-color: #333;
-    color: #fff;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-
-  /* Footer Styles */
+  margin: 0;
+  padding: 0;
+}
 
 
+/* Header Styles */
+header {
+  background-color: #333;
+  color: #fff;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Footer Styles */
 footer {
-    background-color: #ccc;
-    height: 10vh;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  background-color: #ccc;
+  height: 10vh;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 footer p {
-    margin: 0;
-    font-size: small;
+  margin: 0;
+  font-size: small;
 }
 
- 
 
+/* Main styles */
+main {
+  position: relative; /* added to make sure absolute positioning works */
+  height: 80vh; /* added to ensure main takes up the remaining viewport height */
+}
 
-  .no-wrap {
-    white-space: nowrap;
-  }
+.button-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-  .responsive-heading {
-    font-size: 2vw; /* adjust the value as needed */
-  }
-  
+.button {
+  display: block;
+  padding: 15px 25px;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #363b36;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {
+  background-color: #333533;
+}
+
+.button:active {
+  background-color: #282b29;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+/* Other classes*/
+.no-wrap {
+  white-space: nowrap;
+}
+
+.responsive-heading {
+  font-size: 2vw; /* adjust the value as needed */
+}
