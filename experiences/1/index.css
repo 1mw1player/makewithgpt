@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  canvas {
+    background: black;
+  }
+  
+  #load-button {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 10px;
+  }
+  
