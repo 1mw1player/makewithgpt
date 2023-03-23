@@ -1,4 +1,21 @@
+
+/* Import the font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Set the font family for headings */
+header,footer,p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700; /* bold */
+}
+
+
+
+
+
+
 /* Global Styles */
+
+
 body {
   margin: 0;
   padding: 0;
@@ -37,6 +54,11 @@ footer p {
 main {
   position: relative;
   height: 80vh;
+}
+
+ main p {
+  text-align: center;
+
 }
 
 .button-container {
