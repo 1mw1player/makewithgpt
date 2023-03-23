@@ -1,12 +1,3 @@
-/* Import the font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-/* Set the font family for headings */
-header,footer,p {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700; /* bold */
-}
-
 /* Global Styles */
 body {
   margin: 0;
@@ -44,25 +35,15 @@ footer p {
 
 /* Main styles */
 main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 50vh;
-  box-sizing: border-box; /* include padding in height calculation */
-}
-
-main p {
-  text-align: center;
+  position: relative;
+  height: 80vh;
 }
 
 .button-container {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(15vh + 10px); /* set button position just above the footer */
 }
-
 
 .button {
   display: block;
@@ -98,15 +79,15 @@ main p {
   font-size: 2vw;
 }
 
-
+/* Media Queries */
 @media only screen and (max-width: 768px) {
   .button-container {
-    bottom: 15vh;
+    bottom: 50px;
   }
 }
 
 @media only screen and (min-width: 769px) {
   .button-container {
-    bottom: calc(10vh + 10px); /* set button position just above the footer */
+    bottom: 100px;
   }
 }
