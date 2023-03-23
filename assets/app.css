@@ -82,12 +82,12 @@ main {
 /* Media Queries */
 @media only screen and (max-width: 768px) {
   .button-container {
-    bottom: 50px;
+    bottom: 100px;
   }
 }
 
 @media only screen and (min-width: 769px) {
   .button-container {
-    bottom: 100px;
+    bottom: 50px;
   }
 }
