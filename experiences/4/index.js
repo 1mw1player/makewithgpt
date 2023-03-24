@@ -174,7 +174,7 @@ for (let i = 0; i < enemies.length; i++) {
   context.fillText(`Score: ${destroyedPlayers}`, canvas4.width / 2,100);
 
   // Draw the message if the player is blue
-  if (player.color === 'blue') {
+  if (player.color === 'green') {
     message = 'Patience is a Virtue';
     context.fillStyle = 'white';
     context.font = 'bold 16px Arial';
