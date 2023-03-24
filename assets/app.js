@@ -15,7 +15,6 @@ function goToExperience() {
   loadPage("experiences/" + currentExperience + "/index.html");
 }
 
-
 function loadPage(url) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -26,7 +25,7 @@ function loadPage(url) {
       var css = document.createElement("link");
       css.rel = "stylesheet";
       css.type = "text/css";
-      css.href = url.replace("html", "css");
+      css.href = url.replace("html", "css"); // fix the URL to load the correct CSS file
       document.head.appendChild(css);
 
       // Add the JavaScript file to the head section
@@ -39,3 +38,6 @@ function loadPage(url) {
   xhttp.open("GET", url, true);
   xhttp.send();
 }
+
+
+
