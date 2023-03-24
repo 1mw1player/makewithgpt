@@ -76,6 +76,10 @@ main p span {
   }
 }
 
+#main-paragraph1 {
+  color: orange;
+}
+
 
 .button-container {
   position: absolute;

@@ -4,6 +4,11 @@ var currentExperience = 0;
 function goToExperience() {
   // Hide the paragraph tag
   document.getElementById("main-paragraph").style.display = "none";
+
+  //hide the orange button
+  document.getElementById("hoops").style.display = "none";
+
+
   
   var nextExperience = currentExperience + 1;
   if (nextExperience > 9) {
