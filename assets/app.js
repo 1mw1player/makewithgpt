@@ -2,6 +2,9 @@
 var currentExperience = 0;
 
 function goToExperience() {
+  // Hide the paragraph tag
+  document.getElementById("main-paragraph").style.display = "none";
+  
   var nextExperience = currentExperience + 1;
   if (nextExperience > 9) {
     nextExperience = 1;
@@ -11,6 +14,7 @@ function goToExperience() {
   currentExperience = nextExperience;
   loadPage("experiences/" + currentExperience + "/index.html");
 }
+
 
 function loadPage(url) {
   var xhttp = new XMLHttpRequest();
