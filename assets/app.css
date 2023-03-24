@@ -85,6 +85,7 @@ main p span {
 }
 
 
+
 .button {
   display: block;
   padding: 15px 25px;
@@ -98,6 +99,14 @@ main p span {
   border: none;
   border-radius: 15px;
   box-shadow: 0 9px #999;
+  margin: 0 10px; /* add some margin between the buttons */
+}
+
+#hoops {
+  margin-left: 20rem;
+  margin-top: -30px; /* move the button up */
+  background-color: orange; /* add this line */
+  
 }
 
 .button:hover {
