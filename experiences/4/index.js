@@ -108,7 +108,7 @@ function render() {
   if (player.color === 'blue') {
     message = 'Patience is a Virtue';
     context.fillStyle = 'white';
-    context.font = 'bold 8px Arial';
+    context.font = 'bold 16px Arial';
     context.textAlign = 'center';
     context.fillText(message, canvas4.width / 2, canvas4.height / 2 + 50);
     
