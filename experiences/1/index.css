@@ -7,11 +7,14 @@
   canvas {
     background: black;
   }
+
   
-  #load-button {
-    position: absolute;
-    z-index: 1;
-    top: 10px;
-    left: 10px;
-  }
-  
+  /* Main styles */
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  box-sizing: border-box; /* include padding in height calculation */
+}
