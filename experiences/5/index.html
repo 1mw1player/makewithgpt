@@ -23,7 +23,7 @@
 					position: absolute;
   					left: 50%;
   					transform: translateX(-50%);
-					  bottom: calc(1vh + 10px);
+					  bottom: calc(10vh + 10px);
   					
 
 				}
@@ -32,7 +32,7 @@
 					position: absolute;
   					left: 50%;
   					transform: translateX(-50%);
-  					
+					  bottom: calc(10vh + 10px);		
 				}
     </style>
 </head>
@@ -332,6 +332,18 @@ document.body.appendChild(button);
   	bottom: calc(15vh + 5px); /* set button position just above the footer */
 
 	}
+
+	button:hover {
+        background-color: #333533;
+        }
+
+        button:active {
+        background-color: #282b29;
+        box-shadow: 0 5px #666;
+        transform: translateX(-50%);
+        
+      }
+
 	</style>
 	
 </body>
