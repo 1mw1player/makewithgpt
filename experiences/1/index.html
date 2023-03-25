@@ -11,7 +11,59 @@
 
    <script src="index.js"></script>
 
-
-
+   <script>
+    // Create a button element
+   const button = document.createElement('button');
+   
+   // Set the button text
+   
+   
+   // Set button attributes
+   button.setAttribute('type', 'button');
+   button.setAttribute('id', 'myButton');
+   
+   // Add event listener to the button
+   button.addEventListener('click', function() {
+       window.location.href = '../2/index.html';
+     });
+   
+   
+   
+   
+   // Set button styles
+   button.style.display = 'block';
+   button.style.padding = '15px 25px';
+   button.style.fontSize = '10px';
+   button.style.cursor = 'pointer';
+   
+   
+   // Append the button to the body element
+   document.body.appendChild(button);
+   </script>
+   
+     
+   
+   
+   <style>
+     button {
+     display: block;
+       padding: 15px 25px;
+       font-size: 10px;
+       cursor: pointer;
+       text-align: center;
+       text-decoration: none;
+       outline: none;
+       color: #fff;
+       background-color: #363b36;
+       border: none;
+       border-radius: 15px;
+       box-shadow: 0 9px #999;
+     position: absolute;
+       left: 50%;
+       transform: translateX(-50%);
+       bottom: calc(15vh + 5px); /* set button position just above the footer */
+   
+     }
+     </style>
 </body>
 </html>
