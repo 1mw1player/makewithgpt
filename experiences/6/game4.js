@@ -73,6 +73,52 @@ function drawBlackBall(x, y) {
   ctx.fill();
 }
 
+///touch controls
+function getTouchPosition(event) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: event.touches[0].clientX - rect.left,
+    y: event.touches[0].clientY - rect.top
+  };
+}
+
+canvas.addEventListener('touchstart', (event) => {
+  const touchPosition = getTouchPosition(event);
+  if (Math.sqrt((touchPosition.x - circleX)**2 + (touchPosition.y - circleY)**2) <= circleRadius) {
+    isDraggingCircle1 = true;
+  }
+  if (Math.sqrt((touchPosition.x - circle2X)**2 + (touchPosition.y - circle2Y)**2) <= circleRadius) {
+    isDraggingCircle2 = true;
+  }
+  previousMousePosition = touchPosition;
+});
+
+canvas.addEventListener('touchmove', (event) => {
+  const touchPosition = getTouchPosition(event);
+  if (isDraggingCircle1) {
+    circleX += touchPosition.x - previousMousePosition.x;
+    circleY += touchPosition.y - previousMousePosition.y;
+    if (circleY > canvas.height/2 - circleRadius) {
+      circleY = canvas.height/2 - circleRadius;
+    }
+  }
+  if (isDraggingCircle2) {
+    circle2X += touchPosition.x - previousMousePosition.x;
+    circle2Y += touchPosition.y - previousMousePosition.y;
+    if (circle2Y < canvas.height/2 + circleRadius) {
+      circle2Y = canvas.height/2 + circleRadius;
+    }
+  }
+  previousMousePosition = touchPosition;
+});
+
+canvas.addEventListener('touchend', (event) => {
+  isDraggingCircle1 = false;
+  isDraggingCircle2 = false;
+});
+
+
+
 ///mouse funtions///
 
 function getMousePosition(event) {
@@ -119,7 +165,64 @@ function getMousePosition(event) {
   });
   
 
-///collision funtions////
+/// touch collision funtions////
+
+function checkCollision(touchX, touchY) {
+  // Check for collision with the red circle
+  const distanceToCircle1 = Math.sqrt((blackBallX - circleX) ** 2 + (blackBallY - circleY) ** 2);
+  if (distanceToCircle1 < circleRadius + 25) {
+    blackBallSpeedX *= -1;
+    blackBallSpeedY *= -1;
+    blackBallX += blackBallSpeedX;
+    blackBallY += blackBallSpeedY;
+  }
+
+  // Check for collision with the blue circle
+  const distanceToCircle2 = Math.sqrt((blackBallX - circle2X) ** 2 + (blackBallY - circle2Y) ** 2);
+  if (distanceToCircle2 < circleRadius + 25) {
+    blackBallSpeedX *= -1;
+    blackBallSpeedY *= -1;
+    blackBallX += blackBallSpeedX;
+    blackBallY += blackBallSpeedY;
+  }
+
+  // Check for collision with the white squares
+  if (
+    blackBallX >= square1X &&
+    blackBallX <= square1X + squareSize &&
+    blackBallY >= square1Y &&
+    blackBallY <= square1Y + squareSize
+  ) {
+    blackBallSpeedX *= -1;
+    blackBallSpeedY *= -1;
+    blackBallX += blackBallSpeedX;
+    blackBallY += blackBallSpeedY;
+  }
+
+  if (
+    blackBallX >= square2X &&
+    blackBallX <= square2X + squareSize &&
+    blackBallY >= square2Y &&
+    blackBallY <= square2Y + squareSize
+  ) {
+    blackBallSpeedX *= -1;
+    blackBallSpeedY *= -1;
+    blackBallX += blackBallSpeedX;
+    blackBallY += blackBallSpeedY;
+  }
+  
+  // Check for collision with touch
+  const distanceToTouch = Math.sqrt((blackBallX - touchX) ** 2 + (blackBallY - touchY) ** 2);
+  if (distanceToTouch < blackBallRadius + 25) {
+    blackBallSpeedX *= -1;
+    blackBallSpeedY *= -1;
+    blackBallX += blackBallSpeedX;
+    blackBallY += blackBallSpeedY;
+  }
+}
+
+
+
 
 
 function checkCollision() {
