@@ -113,6 +113,13 @@ main p span {
   
 }
 
+#airhockey{
+  margin-left: 10rem;
+  margin-top: -30px; /* move the button up */
+  background-color: lightblue; /* add this line */
+  
+}
+
 .button:hover {
   background-color: #333533;
 }
