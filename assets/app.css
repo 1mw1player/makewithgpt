@@ -80,6 +80,10 @@ main p span {
   color: orange;
 }
 
+#main-paragraph2 {
+  color: lightblue;
+}
+
 
 .button-container {
   position: absolute;
