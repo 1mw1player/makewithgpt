@@ -19,3 +19,15 @@ words1.forEach((word, index) => {
   span.style.animationDelay = `${index * 0.1}s`; // add delay for each word
   paragraph1.appendChild(span);
 });
+
+
+const paragraph2 = document.getElementById("main-paragraph2");
+const words2 = paragraph2.innerHTML.split(" ");
+paragraph2.innerHTML = "";
+
+words1.forEach((word, index) => {
+  const span = document.createElement("span");
+  span.innerHTML = word + " ";
+  span.style.animationDelay = `${index * 0.1}s`; // add delay for each word
+  paragraph2.appendChild(span);
+});

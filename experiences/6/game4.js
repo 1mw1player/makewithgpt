@@ -327,12 +327,12 @@ function render() {
   // Draw the score
   ctx.font = "24px Arial";
   ctx.fillStyle = "black";
-  ctx.fillText("Score: " + score, 10, 30);
+  ctx.fillText("Ouch!: " + score, 10, 30);
 
   // Draw the score1
   ctx.font = "24px Arial";
   ctx.fillStyle = "black";
-  ctx.fillText("Score: " + score1, 10, canvas.height - 10);
+  ctx.fillText("Ouch!: " + score1, 10, canvas.height - 10);
 
 
   
