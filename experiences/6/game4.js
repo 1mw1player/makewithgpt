@@ -251,8 +251,7 @@ function checkCollision() {
       blackBallY >= square1Y &&
       blackBallY <= square1Y + squareSize
     ) {
-      blackBallX = canvas.width / 2;
-      blackBallY = canvas.height / 2;
+    
       score += 1; // Increment score by 1 
       sound.play();
      
@@ -264,8 +263,7 @@ function checkCollision() {
       blackBallY >= square2Y &&
       blackBallY <= square2Y + squareSize
     ) {
-      blackBallX = canvas.width / 2;
-      blackBallY = canvas.height / 2;
+      
       score1 += 1; // Increment score by 1
       sound.play();
        }
