@@ -4,7 +4,7 @@ canvas.style.backgroundColor = 'lightblue';
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const circleRadius = 50;
+const circleRadius = 20;
 let circleX = canvas.width / 2;
 let circleY = circleRadius + 10;
 let circle2X = canvas.width / 2;
@@ -38,7 +38,7 @@ let blackBallX = canvas.width / 2;
 let blackBallY = canvas.height / 2;
 let blackBallSpeedX = 5;
 let blackBallSpeedY = 5;
-const blackBallRadius = 50;
+const blackBallRadius = 10;
 
 let collidedWithCircle1 = false;
 let collidedWithCircle2 = false;
