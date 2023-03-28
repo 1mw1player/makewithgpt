@@ -10,6 +10,7 @@ let shapes = [
 { type: 'circle', x: 200, y: 100, size: 50, color: '#00FF00', angle: 0, speed: 2 }
 ];
 
+
 function update() {
 // Clear the canvas
 ctx.clearRect(0, 0, canvas.width, canvas.height);
