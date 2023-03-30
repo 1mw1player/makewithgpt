@@ -4,37 +4,21 @@
 	<meta charset="UTF-8" />
     <title>Basketball Game</title>
 	<script type="text/javascript" src="js/phaser.min.js"></script>
-	<h2>Basketball Game</h2>
 	<link rel="stylesheet" href="assets/index.css">
     <style type="text/css">
         body {
             margin: 0;
         }
 		canvas {
-  				position: absolute;
-  				top: 50%;
-  				left: 50%;
-  				transform: translate(-50%, -50%);
-  				margin: 0 auto;
-  				border: thin solid black;
-			
-			}
-				span {
+  			position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+  border: thin solid black;
+}
 
-					position: absolute;
-  					left: 50%;
-  					transform: translateX(-50%);
-					  bottom: calc(20vh + 10px);
-  					
-
-				}
-				h2 {
-					
-					position: absolute;
-  					left: 50%;
-  					transform: translateX(-50%);
-					  bottom: calc(10vh + 10px);		
-				}
+				
     </style>
 </head>
 <body>
@@ -146,9 +130,6 @@ function create() {
 	game.input.onUp.add(release, this);
 
 
-	var instructions = document.createElement("span");
-	instructions.innerHTML = "Instructions: Quickly drag the ball to shoot the ball into the hoop!";
-	document.body.appendChild(instructions);
 }
 
 function update() {
@@ -330,7 +311,7 @@ document.body.appendChild(button);
 	position: absolute;
   	left: 50%;
   	transform: translateX(-50%);
-  	bottom: calc(15vh + 5px); /* set button position just above the footer */
+  	bottom: calc(10vh + 5px); /* set button position just above the footer */
 
 	}
 
