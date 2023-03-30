@@ -18,7 +18,20 @@ body {
   border: none;
   outline: none;
 }
- 
+ #home{
+  display: block;
+  padding: 15px 25px;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #363b36;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+ }
 
 #button2 {
   position: absolute;
