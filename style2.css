@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+
+  
+
+  #button {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-25px) translateY(-50%) scale(0.5);;
+  width: 50px;
+  height: 50px;
+  background-color: yellow;
+  border: none;
+  outline: none;
+}
+ 
+
+#button2 {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translateX(-25px) translateY(-50%) rotate(180deg) scale(0.5);;
+  width: 50px;
+  height: 50px;
+  background-color: yellow;
+  border: none;
+  outline: none;
+}
+
+  
+#button3 {
+    position: absolute;
+    top: 85%;
+    left: 57.5%; /* Adjusted from 57.5% */
+    transform: translateX(-50%) translateY(-50%) scale(0.5);;
+    width: 50px;
+    height: 50px;
+    background-color: yellow;
+    border: none;
+    outline: none;
+  }
+  
+
+  #button4 {
+    position: absolute;
+    top: 85%;
+    right: 57.5%; /* Adjusted from 57.5% */
+    transform: translateX(50%) translateY(-50%) scaleX(-1) scale(0.5);;
+    width: 50px;
+    height: 50px;
+    background-color: yellow;
+    border: none;
+    outline: none;
+  }
+  
+  
+  #arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-right: 25px solid black;
+  }
+
+  #arrow2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-right: 25px solid black;
+  }
+
+  #arrow3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(180deg);
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-right: 25px solid black;
+  }
+
+  #arrow4 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(180deg);
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-right: 25px solid black;
+  }
+  
+  
+  #canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
