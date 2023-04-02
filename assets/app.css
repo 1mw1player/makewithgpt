@@ -59,7 +59,7 @@ main {
   align-items: left;
   min-height: 80vh;
   box-sizing: border-box; /* include padding in height calculation */
-background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
+  background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
 
 
 
@@ -122,7 +122,7 @@ main p span {
   background-color: #000000;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
+  box-shadow: 0 9px #f7f7f7;
   margin: 0 10px; /* add some margin between the buttons */
 }
 
