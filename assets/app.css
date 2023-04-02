@@ -1,6 +1,7 @@
 
 * {
   -webkit-tap-highlight-color: transparent;
+  
 }
 
 
@@ -23,8 +24,8 @@ body {
 
 /* Header Styles */
 header {
-  background-color: #333;
-  color: #fff;
+  background-color: #000000;
+  color: #ffffff;
   height: 10vh;
   display: flex;
   justify-content: center;
@@ -33,9 +34,9 @@ header {
 
 /* Footer Styles */
 footer {
-  background-color: #ccc;
+  background-color: #000000;
   height: 10vh;
-  color: #333;
+  color: #fcfcfc;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,14 +57,19 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 50vh;
+  min-height: 80vh;
   box-sizing: border-box; /* include padding in height calculation */
+background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
+
+
+
 }
 
 
 main p {
   text-align: left;
   font-size: 1.2rem;
+  color: rgb(247, 241, 232);
 }
 
 main p span {
@@ -85,12 +91,12 @@ main p span {
 }
 
 #main-paragraph1 {
-  color: orange;
+  color: rgb(247, 241, 232);
   text-align: left;
 }
 
 #main-paragraph2 {
-  color: rgb(223, 43, 43);
+  color: rgb(236, 233, 233);
   text-align: left;
 }
 
@@ -113,13 +119,25 @@ main p span {
   text-align: center;
   text-decoration: none;
   outline: none;
-  color: #fff;
-  background-color: #363b36;
+  background-color: #000000;
   border: none;
   border-radius: 15px;
   box-shadow: 0 9px #999;
   margin: 0 10px; /* add some margin between the buttons */
 }
+
+
+
+.button:hover {
+  background-color: #333533;
+}
+
+.button:active {
+  background-color: #282b29;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
 
 #hoops {
   margin-left: 20rem;
@@ -134,17 +152,6 @@ main p span {
   background-color: rgb(221, 39, 39); /* add this line */
   
 }
-
-.button:hover {
-  background-color: #333533;
-}
-
-.button:active {
-  background-color: #282b29;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
-
 /* Other classes */
 .no-wrap {
   white-space: nowrap;
