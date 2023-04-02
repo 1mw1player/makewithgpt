@@ -106,7 +106,7 @@ main p span {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(15vh + 10px); /* set button position just above the footer */
+  bottom: calc(15vh + 7px); /* set button position just above the footer */
 }
 
 
