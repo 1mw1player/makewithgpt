@@ -29,6 +29,7 @@
 
       let score = 0;
 
+
       class Obstacle extends THREE.Mesh {
         constructor(position) {
           const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
@@ -164,4 +165,3 @@ if (Math.random() < 0.1) {
 
       
 
-    
