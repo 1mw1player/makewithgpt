@@ -55,8 +55,8 @@ footer p {
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   min-height: 80vh;
   box-sizing: border-box; /* include padding in height calculation */
 background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
@@ -149,7 +149,7 @@ main p span {
 #game{
   margin-left: 10rem;
   margin-top: -30px; /* move the button up */
-  background-color: rgb(221, 39, 39); /* add this line */
+  background-color: rgb(228, 33, 33); /* add this line */
   
 }
 /* Other classes */
