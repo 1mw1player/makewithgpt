@@ -24,12 +24,13 @@ body {
 
 /* Header Styles */
 header {
-  background-color: #000000;
+  background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
   color: #ffffff;
   height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: large;
 }
 
 /* Footer Styles */
@@ -44,22 +45,25 @@ footer {
   bottom: 0;
   width: 100%;
   max-width: 100vw;
+  background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
+
 }
 
 footer p {
   margin: 0;
   font-size: small;
+  
 }
 
 /* Main styles */
 main {
-  display: flex;
-  flex-direction: column;
+  display: flexbox;
+  flex-direction: row;
   justify-content: left;
   align-items: left;
-  min-height: 80vh;
+  min-height:80vh;
   box-sizing: border-box; /* include padding in height calculation */
-  background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
+  background: white;
 
 
 
@@ -68,8 +72,8 @@ main {
 
 main p {
   text-align: left;
-  font-size: 1.2rem;
-  color: rgb(247, 241, 232);
+  font-size: 1.4rem;
+  color: rgb(5, 5, 5);
 }
 
 main p span {
@@ -91,12 +95,12 @@ main p span {
 }
 
 #main-paragraph1 {
-  color: rgb(247, 241, 232);
+  color: rgb(0, 0, 0);
   text-align: left;
 }
 
 #main-paragraph2 {
-  color: rgb(236, 233, 233);
+  color: rgb(0, 0, 0);
   text-align: left;
 }
 
