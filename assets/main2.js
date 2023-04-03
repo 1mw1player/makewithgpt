@@ -1,118 +1,158 @@
-// Create a variable to keep track of the player's health
-let playerHealth = 100;
-
-// Get the canvas element
-const canvas = document.getElementById("canvas");
-
-// Set up the WebGL renderer
-const renderer = new THREE.WebGLRenderer({ canvas });
-
-// Set the viewport size
-renderer.setSize(window.innerWidth, window.innerHeight);
-
-// Create a new scene
+// Three.js initialization
 const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-// Create a new camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+// Plane
+const planeGeometry = new THREE.PlaneGeometry(15, 15, 10, 10);
+const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xCCCCCC, wireframe: true });
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.rotateX(-Math.PI / 2);
+scene.add(plane);
 
-// Set the camera position
-camera.position.z = 5;
+// Player
+const playerGeometry = new THREE.BoxGeometry(1, 1, 1);
+const playerMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const player = new THREE.Mesh(playerGeometry, playerMaterial);
+player.position.set(0, 0.5, 0);
+scene.add(player);
 
-// Add the camera to the scene
-scene.add(camera);
+// Obstacle
+const obstacleGeometry = new THREE.BoxGeometry(1, 1, 1);
+const obstacleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const obstacle = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
+obstacle.position.set(0, 0.5, -10);
 
-// Create a new plane geometry
-const geometry = new THREE.PlaneGeometry(5, 5);
 
-// Create a new material with a color
-const material = new THREE.MeshBasicMaterial({
-    color: 0xffffff, // white color
-    side: THREE.DoubleSide,
-  });
-  
 
-// Create a new mesh with the geometry and material
-const mesh = new THREE.Mesh(geometry, material);
+// Obstacle movement
+let obstacleSpeed = 0.05;
+let obstacleDirection = 1;
 
-// Add the mesh to the scene
-scene.add(mesh);
+// Array to store all obstacles
+const obstacles = [];
 
-// Create an array to store the enemies
-const enemies = [];
 
-// Create a function to spawn a new enemy
-function spawnEnemy() {
-  // Create a new enemy mesh
-  const enemyMesh = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ color: 0xff0000 })
-  );
 
-  // Set the enemy position
-  enemyMesh.position.set(
-    Math.random() * 10 - 5, // Random x position between -5 and 5
-    Math.random() * 10 - 5, // Random y position between -5 and 5
-    0 // Always at z position 0
-  );
-
-  // Add the enemy to the scene
-  scene.add(enemyMesh);
-
-  // Add the enemy to the enemies array
-  enemies.push(enemyMesh);
+// Randomly spawn obstacles
+function spawnObstacle() {
+  const newObstacle = obstacle.clone();
+  newObstacle.position.x = Math.random() * 20 - 10;
+  newObstacle.position.z = Math.random() * 20 - 10;
+  newObstacle.speed = Math.random() * 0.1 + 0.05; // Random speed between 0.05 and 0.15
+  newObstacle.direction = Math.random() > 0.5 ? 1 : -1; // Random direction (1 or -1)
+  scene.add(newObstacle);
+  obstacles.push(newObstacle);
 }
 
-// Call the spawnEnemy function every 2 seconds
-setInterval(spawnEnemy, 2000);
-
-// Create a function to move the enemies
-function moveEnemies() {
-  // Loop through all the enemies in the enemies array
-  for (let i = 0; i < enemies.length; i++) {
-    // Move the enemy down by 0.1 units
-    enemies[i].position.y -= 0.1;
-
-    // Check if the enemy collides with the player
-    if (
-      enemies[i].position.distanceTo(mesh.position) < 1 &&
-      playerHealth > 0
-    ) {
-      // Reduce the player's health by 1
-      playerHealth--;
-
-      // Update the health display
-      document.getElementById("healthDisplay").innerHTML =
-        "Health: " + playerHealth;
-
-      // If the player's health reaches 0, end the game
-      if (playerHealth === 0) {
-        alert("Game over!");
-        window.location.reload();
-      }
-    }
-
-    // Remove the enemy if it goes off the bottom of the screen
-    if (enemies[i].position.y < -5) {
-      scene.remove(enemies[i]);
-      enemies.splice(i, 1);
-    }
-  }
+for (let i = 0; i < 10; i++) {
+  spawnObstacle();
 }
 
-// Render the scene
+
+
+
+// Camera
+camera.position.set(0, 10, 20);
+camera.lookAt(0, 0, 0);
+
+
+// Player movement
+const playerVelocity = new THREE.Vector3();
+const playerSpeed = 0.1;
+let targetRotation = 0;
+const rotationSpeed = 0.1;
+
+// Score
+let score = 100;
+const scoreText = document.createElement('div');
+scoreText.style.position = 'absolute';
+scoreText.style.top = '10px';
+scoreText.style.left = '10px';
+scoreText.style.color = 'white';
+scoreText.style.fontSize = '24px';
+scoreText.innerHTML = `Score: ${score}`;
+document.body.appendChild(scoreText);
+
+
+
+// Move player on mouse click
+document.addEventListener('mousedown', (event) => {
+  const mousePosition = new THREE.Vector2(
+    (event.clientX / window.innerWidth) * 2 - 1,
+    -(event.clientY / window.innerHeight) * 2 + 1
+  );
+  const raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(mousePosition, camera);
+  const intersection = raycaster.intersectObject(plane)[0].point;
+
+  // Set the player's velocity towards the intersection point
+  playerVelocity.copy(intersection).sub(player.position).normalize().multiplyScalar(0.1);
+
+  // Calculate the target rotation for the player
+  const playerDirection = new THREE.Vector3().subVectors(intersection, player.position).normalize();
+  targetRotation = Math.atan2(playerDirection.x, playerDirection.z);
+});
+
+
+
+
+
+// Render loop
 function render() {
   requestAnimationFrame(render);
+  
+ 
 
-  // Move the enemies
-  moveEnemies();
+  // Move all obstacles
+  obstacles.forEach((obstacle) => {
+    obstacle.position.z += obstacle.speed * obstacle.direction;
+    if (obstacle.position.z > 10 || obstacle.position.z < -10) {
+      obstacle.direction = -obstacle.direction;
+    }
+  });
 
-  // Render the scene
+  // Move red cube
+  if (playerVelocity.length() > 0) {
+    player.position.add(playerVelocity);
+    const playerRotation = player.rotation.y;
+    const deltaRotation = targetRotation - playerRotation;
+    if (deltaRotation !== 0) {
+      const direction = deltaRotation > 0 ? 1 : -1;
+      player.rotation.y += 0.05 * direction;
+      if (Math.abs(deltaRotation) < 0.05) {
+        player.rotation.y = targetRotation;
+      }
+    }
+    playerVelocity.multiplyScalar(0.95);
+    if (playerVelocity.length() < 0.01) {
+      playerVelocity.set(0, 0, 0);
+    }
+  }
+
+  // Check for collision
+const playerBox = new THREE.Box3().setFromObject(player);
+scene.children.forEach((child) => {
+  if (child === player || child === plane || child === scoreText) {
+    return;
+  }
+  const obstacleBox = new THREE.Box3().setFromObject(child);
+  if (playerBox.intersectsBox(obstacleBox)) {
+    score -= 1;
+    scoreText.innerHTML = `Score: ${score}`;
+    child.position.z = Math.random() * 20 - 10;
+    child.position.x = Math.random() * 20 - 10; // Spawn obstacle randomly
+  }
+});
+
+
+
+
   renderer.render(scene, camera);
 }
+
 render();
+
+

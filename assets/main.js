@@ -1,3 +1,4 @@
+const scoreDisplay = document.getElementById('score');
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -27,7 +28,7 @@
       camera.position.set(0, 5, 10);
       camera.lookAt(scene.position);
 
-      let score = 0;
+      let score = 100;
 
 
       class Obstacle extends THREE.Mesh {
@@ -86,8 +87,12 @@ const groundBox = new THREE.Box3().setFromObject(plane);
 function checkCollision() {
   if (playerBox.intersectsBox(groundBox)) {
     player.position.y = 0.5;
+  } else if (playerBox.intersectsBox(obstacleBox)) {
+    score = Math.max(0, score - 1);
+    scoreElement.innerHTML = "Score: " + score;
   }
 }
+
 
 let targetRotation = 0;
 const playerVelocity = new THREE.Vector3();
@@ -117,7 +122,19 @@ function onMouseDown(event) {
 
   const obstacles = [];
 
+ 
   function gameLoop() {
+
+
+    
+      
+    
+      // Update the score display
+      scoreDisplay.innerText = `Score: ${score}`;
+    
+      // ...
+    
+    
 
 // Randomly spawn new obstacles with a certain probability
 if (Math.random() < 0.1) {
@@ -164,4 +181,3 @@ if (Math.random() < 0.1) {
       gameLoop();
 
       
-
