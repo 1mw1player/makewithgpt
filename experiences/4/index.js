@@ -23,15 +23,50 @@ let enemies = [];
 let showMessage = false;
 let message = '';
 
-// Create a player object
+let colorParts = new Array(10).fill('white');
+
+
 let player = {
+  x: canvas4.width / 2,
+  y: canvas4.height / 2,
+  size: 10,
+  angle: 0,
+  speed: 2,
+  color: 'red',
+  colorParts: new Array(10).fill('white')
+};
+
+
+
+function spawnPlayer() {
+  if (destroyedPlayers >= 3) {
+    player.color = 'green'; // Change the color of the player if the score is 5 or greater
+    player.speed = 2;
+
+    // Spawn new enemies around the player, further away
+    for (let i = 0; i < 5; i++) {
+      let x = player.x + Math.random() * 600 - 150;
+      let y = player.y + Math.random() * 600 - 150;
+      let speed = Math.random() + 1;
+      let enemy = new Enemy(x, y, speed);
+      enemies.push(enemy);
+    }
+  } else {
+    player.color = 'red'; // Otherwise, set the color to red
+    player.speed = 2; // Set the player speed back to 5 if they turn red
+  }
+
+  player = {
     x: canvas4.width / 2,
     y: canvas4.height / 2,
     size: 10,
     angle: 0,
-    speed: 2,
-    color: 'red' // New property to store the color of the player
+    speed: player.speed,
+    color: player.color, // Set the color of the new player object
+    colorParts: new Array(10).fill('white')
   };
+}
+
 
 
 
@@ -50,39 +85,7 @@ function Enemy(x, y, speed) {
 
 
 
-// Function to spawn a new player
-function spawnPlayer() {
-  if (destroyedPlayers >=3) {
-    player.color = 'green'; // Change the color of the player if the score is 5 or greater
-    player.speed = 2; 
 
-     // Spawn new enemies around the player, further away
-     for (let i = 0; i < 5; i++) {
-      let x = player.x + Math.random() * 600 - 150;
-      let y = player.y + Math.random() * 600 - 150;
-      let speed = Math.random() + 1;
-      let enemy = new Enemy(x, y, speed);
-      enemies.push(enemy);
-    }
-  
-  } else {
-    player.color = 'red'; // Otherwise, set the color to red
-    player.speed = 2; // Set the player speed back to 5 if they turn red
-  }
-  
-  player = {
-    x: canvas4.width / 2,
-    y: canvas4.height / 2,
-    size: 10,
-    angle: 0,
-    speed: player.speed,
-    color: player.color // Set the color of the new player object
-  };
-
-  
-
-
-}
 
 let lastSpawnTime = Date.now(); // Add a variable to track the last spawn time
 
@@ -102,6 +105,8 @@ function checkCollision(a, b) {
   return distance < a.size + b.size;
 }
 
+let isPlayerRestricted = false;
+
 function update() {
   if (player.color === 'red') {
     if (mouseClickPosition) {
@@ -119,14 +124,19 @@ function update() {
     enemies[i].y += enemies[i].speed * 0.25 * Math.sin(angle);
   }
 
-  if (player.color === 'red' || player.color === 'green') {
-    player.x += player.speed * Math.cos(player.angle);
-    player.y += player.speed * Math.sin(player.angle);
+  player.x += player.speed * Math.cos(player.angle);
+  player.y += player.speed * Math.sin(player.angle);
+
+  if (isPlayerRestricted) {
+    player.x = Math.max(0 + player.size / 2, Math.min(player.x, canvas4.width - player.size / 2));
+    player.y = Math.max(0 + player.size / 2, Math.min(player.y, canvas4.height - player.size / 2));
   }
 
-  if (destroyedPlayers >= 3 && Date.now() - lastSpawnTime > 5000) {
-    spawnEnemies();
-    lastSpawnTime = Date.now();
+  if (destroyedPlayers < 3 && (player.x < 0 || player.x > canvas4.width || player.y < 0 || player.y > canvas4.height)) {
+    destroyedPlayers++;
+    spawnPlayer();
+  } else if (destroyedPlayers >= 3) {
+    isPlayerRestricted = true;
   }
 
   for (let i = bullets.length - 1; i >= 0; i--) {
@@ -146,31 +156,39 @@ function update() {
       if (destroyedPlayers > 0) {
         destroyedPlayers--;
       }
+      // Update player color parts
+      let partsToChange = Math.min(10, destroyedPlayers);
+      for (let j = 0; j < partsToChange; j++) {
+        player.colorParts[j] = 'red';
+      }
+      // Update player color if all parts are red
+      if (player.colorParts.every(part => part === 'red')) {
+        player.color = 'red';
+      }
     }
   }
 
-  if (destroyedPlayers < 3 && (player.x < 0 || player.x > canvas4.width || player.y < 0 || player.y > canvas4.height)) {
-    destroyedPlayers++;
-    spawnPlayer();
-  } else if (destroyedPlayers >= 3) {
-    player.x = Math.max(0 + player.size / 2, Math.min(player.x, canvas4.width - player.size / 2));
-    player.y = Math.max(0 + player.size / 2, Math.min(player.y, canvas4.height - player.size / 2));
+  if (Date.now() - lastSpawnTime > 5000) {
+    spawnEnemies();
+    lastSpawnTime = Date.now();
   }
 }
-
 
 
 function render() {
   // Clear the canvas
   context.clearRect(0, 0, canvas4.width, canvas4.height);
 
-  // Draw the player as a red square
+  // Draw the player as a square with color parts
   context.save();
   context.translate(player.x, player.y);
   context.rotate(player.angle);
-  // Draw the player as a red or green square, depending on the value of player.color
-  context.fillStyle = player.color;
-  context.fillRect(-player.size / 2, -player.size / 2, player.size, player.size);
+
+  for (let i = 0; i < 10; i++) {
+    context.fillStyle = player.colorParts[i];
+    context.fillRect(-player.size / 2 + (i * player.size / 10), -player.size / 2, player.size / 10, player.size);
+  }
+
   context.restore();
 
   // Draw the bullets
@@ -187,21 +205,20 @@ function render() {
     bullets[i].y += bullets[i].speed * Math.sin(bullets[i].angle);
   }
 
-// Draw the enemies as triangles
-for (let i = 0; i < enemies.length; i++) {
-  context.save();
-  context.translate(enemies[i].x, enemies[i].y);
-  context.rotate(enemies[i].angle);
-  context.fillStyle = enemies[i].color;
-  context.beginPath();
-  context.moveTo(-enemies[i].size / 2, -enemies[i].size / 2);
-  context.lineTo(0, enemies[i].size / 2);
-  context.lineTo(enemies[i].size / 2, -enemies[i].size / 2);
-  context.closePath();
-  context.fill();
-  context.restore();
-}
-
+  // Draw the enemies as triangles
+  for (let i = 0; i < enemies.length; i++) {
+    context.save();
+    context.translate(enemies[i].x, enemies[i].y);
+    context.rotate(enemies[i].angle);
+    context.fillStyle = enemies[i].color;
+    context.beginPath();
+    context.moveTo(-enemies[i].size / 2, -enemies[i].size / 2);
+    context.lineTo(0, enemies[i].size / 2);
+    context.lineTo(enemies[i].size / 2, -enemies[i].size / 2);
+    context.closePath();
+    context.fill();
+    context.restore();
+  }
 
   // Draw the text at the top of the canvas
   context.fillStyle = 'white';
@@ -215,9 +232,6 @@ for (let i = 0; i < enemies.length; i++) {
   context.textAlign = 'center';
   context.fillText(`Score: ${destroyedPlayers}`, canvas4.width / 2, 100);
 }
-
-  
-
 
 
 // Function to update and render the game
