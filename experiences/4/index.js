@@ -84,50 +84,79 @@ function spawnPlayer() {
 
 }
 
+let lastSpawnTime = Date.now(); // Add a variable to track the last spawn time
+
+function spawnEnemies() {
+  // Spawn new enemies around the player, further away
+  for (let i = 0; i < 5; i++) {
+    let x = player.x + Math.random() * 600 - 150;
+    let y = player.y + Math.random() * 600 - 150;
+    let speed = Math.random() + 1;
+    let enemy = new Enemy(x, y, speed);
+    enemies.push(enemy);
+  }
+}
+
+function checkCollision(a, b) {
+  const distance = Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+  return distance < a.size + b.size;
+}
 
 function update() {
   if (player.color === 'red') {
-    // Calculate the angle to the mouse click position
     if (mouseClickPosition) {
       const dx = mouseClickPosition.x - player.x;
       const dy = mouseClickPosition.y - player.y;
       player.angle = Math.atan2(dy, dx);
-
-      
     }
   }
 
-   
-  // Move the enemies towards the player, but at a slower speed
   for (let i = 0; i < enemies.length; i++) {
     let dx = player.x - enemies[i].x;
     let dy = player.y - enemies[i].y;
     let angle = Math.atan2(dy, dx);
     enemies[i].x += enemies[i].speed * 0.25 * Math.cos(angle);
     enemies[i].y += enemies[i].speed * 0.25 * Math.sin(angle);
-
-    
-    
   }
 
-  // Move the player towards the mouse click position
   if (player.color === 'red' || player.color === 'green') {
     player.x += player.speed * Math.cos(player.angle);
     player.y += player.speed * Math.sin(player.angle);
   }
 
-  // Check if the player has reached the edge of the canvas
-  if (player.x < 0 || player.x > canvas4.width || player.y < 0 || player.y > canvas4.height) {
-    destroyedPlayers++;
-    if (destroyedPlayers % 5 === 0) {
-      spawnPlayer();
-      spawnPlayer();
-    } else {
-      spawnPlayer();
+  if (destroyedPlayers >= 3 && Date.now() - lastSpawnTime > 5000) {
+    spawnEnemies();
+    lastSpawnTime = Date.now();
+  }
+
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    for (let j = enemies.length - 1; j >= 0; j--) {
+      if (checkCollision(bullets[i], enemies[j])) {
+        bullets.splice(i, 1);
+        enemies.splice(j, 1);
+        destroyedPlayers++;
+        break;
+      }
     }
   }
-}
 
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    if (checkCollision(player, enemies[i])) {
+      enemies.splice(i, 1);
+      if (destroyedPlayers > 0) {
+        destroyedPlayers--;
+      }
+    }
+  }
+
+  if (destroyedPlayers < 3 && (player.x < 0 || player.x > canvas4.width || player.y < 0 || player.y > canvas4.height)) {
+    destroyedPlayers++;
+    spawnPlayer();
+  } else if (destroyedPlayers >= 3) {
+    player.x = Math.max(0 + player.size / 2, Math.min(player.x, canvas4.width - player.size / 2));
+    player.y = Math.max(0 + player.size / 2, Math.min(player.y, canvas4.height - player.size / 2));
+  }
+}
 
 
 
