@@ -148,8 +148,9 @@ main p span {
   background-color: #000000;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #f7f7f7;
+  box-shadow: 0 9px #494646;
   margin: 0 10px; /* add some margin between the buttons */
+
 }
 
 
@@ -169,12 +170,12 @@ main p span {
   margin-left: 20rem;
   margin-top: -30px; /* move the button up */
   background-color: orange; /* add this line */
-  box-shadow: 0 9px #f7f7f7;
+  box-shadow: 0 9px #e99856ee;
   }
 
   #hoops:hover, #hoops:active {
     background-color: #ff8c00;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 20px rgba(248, 91, 0, 0.5);
   }
   
 
@@ -182,12 +183,12 @@ main p span {
   margin-left: 10rem;
   margin-top: -30px; /* move the button up */
   background-color: rgb(228, 33, 33); /* add this line */
-  box-shadow: 0 9px #f7f7f7;
+  box-shadow: 0 9px #f85e5e;
   }
 
   #game:hover, #game:active {
     background-color: #ff2400;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.5);
   }
   
 
