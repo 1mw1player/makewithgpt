@@ -1,62 +1,106 @@
 
-
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let shapes = [
-{ type: 'square', x: 200, y: 100, size: 50, color: '#FF0000', angle: 0, speed: 2 },
-{ type: 'circle', x: 200, y: 100, size: 50, color: '#00FF00', angle: 0, speed: 2 }
-];
+let score = 0;
+const scoreText = document.createElement('div');
+scoreText.style.position = 'absolute';
+scoreText.style.top = '0';
+scoreText.style.left = '50%';
+scoreText.style.transform = 'translateX(-50%)';
+scoreText.style.color = '#FFFFFF';
+scoreText.style.fontSize = '24px';
+scoreText.innerHTML = `Score: ${score}`;
+document.body.appendChild(scoreText);
 
+let shapes = [  { type: 'square', x: 200, y: -50, size: 50, color: '#FF0000', angle: 0, speed: 2, acceleration: 0.1 },  { type: 'circle', x: 200, y: -50, size: 50, color: '#00FF00', angle: 0, speed: 2, acceleration: 0.1 }];
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
 function update() {
-// Clear the canvas
-ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Clear the canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-// Iterate through the shapes array and draw each shape
-shapes.forEach(shape => {
-ctx.fillStyle = shape.color;
+  // Spawn a new shape at random intervals
+  if (Math.random() < 0.01) {
+    const redSquare = shapes.find(shape => shape.type === 'square' && shape.color === '#FF0000');
+    const greenCircle = shapes.find(shape => shape.type === 'circle' && shape.color === '#00FF00');
+    const newShape = {
+      type: 'combined',
+      x: Math.random() * canvas.width,
+      y: -50,
+      size: redSquare.size,
+      color: getRandomColor(),
+      angle: redSquare.angle,
+      speed: redSquare.speed,
+      acceleration: redSquare.acceleration,
+      circleSize: greenCircle.size,
+      circleColor: getRandomColor()
+    };
+    shapes.push(newShape);
+  }
 
-// Calculate the angle and distance between the shape and the clicked position
-let dx = shape.clickX - shape.x;
-let dy = shape.clickY - shape.y;
-let distance = Math.sqrt(dx * dx + dy * dy);
-shape.angle = Math.atan2(dy, dx);
+  // Iterate through the shapes array and draw each shape
+  shapes.forEach(shape => {
+    ctx.fillStyle = shape.color;
 
-if (shape.type === 'square') {
-ctx.translate(shape.x, shape.y);
-ctx.rotate(shape.angle);
-ctx.fillRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
-ctx.rotate(-shape.angle);
-ctx.translate(-shape.x, -shape.y);
-} else if (shape.type === 'circle') {
-ctx.beginPath();
-ctx.arc(shape.x, shape.y, shape.size / 2, 0, Math.PI * 2);
-ctx.fill();
-}
+    // Move the shape downwards
+    shape.speed += shape.acceleration;
+    shape.y += shape.speed;
 
-// Move the shape towards the clicked position
-if (distance > 5) {
-shape.x += Math.cos(shape.angle) * shape.speed;
-shape.y += Math.sin(shape.angle) * shape.speed;
-}
-});
+    // Check for collision with the bottom of the canvas
+    if (shape.y + shape.size / 2 > canvas.height) {
+      shape.y = canvas.height - shape.size / 2;
+      shape.speed *= -0.8;
+    }
 
-// Request the next animation frame
-requestAnimationFrame(update);
+    if (shape.type === 'combined') {
+      ctx.translate(shape.x, shape.y);
+      ctx.rotate(shape.angle);
+      ctx.fillRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
+      ctx.beginPath();
+      ctx.arc(0, 0, shape.circleSize / 2, 0, Math.PI * 2);
+      ctx.fillStyle = shape.circleColor;
+      ctx.fill();
+      ctx.rotate(-shape.angle);
+      ctx.translate(-shape.x, -shape.y);
+    } else if (shape.type === 'circle') {
+      ctx.beginPath();
+      ctx.arc(shape.x, shape.y, shape.size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (shape.type === 'square') {
+      ctx.translate(shape.x, shape.y);
+      ctx.rotate(shape.angle);
+      ctx.fillRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
+      ctx.rotate(-shape.angle);
+      ctx.translate(-shape.x, -shape.y);
+    }
+  });
+
+  // Request the next animation frame
+  requestAnimationFrame(update);
 }
 
 // Start the animation loop
 requestAnimationFrame(update);
 
-// Add click event listener to the canvas
-canvas.addEventListener('click', (event) => {
-shapes.forEach(shape => {
-// Set the clicked position on the shape
-shape.clickX = event.clientX;
-shape.clickY = event.clientY;
-});
-});
 
+canvas.addEventListener('click', function(event) {
+    shapes.forEach(function(shape, index) {
+      const distance = Math.sqrt(Math.pow(shape.x - event.clientX, 2) + Math.pow(shape.y - event.clientY, 2));
+      if (distance <= shape.size / 2 || distance <= shape.circleSize / 2) {
+        shapes.splice(index, 1);
+        score++;
+        scoreText.innerHTML = `Score: ${score}`;
+      }
+    });
+  });
