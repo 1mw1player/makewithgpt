@@ -6,7 +6,14 @@ words.forEach((word, index) => {
   const span = document.createElement("span");
   span.innerHTML = word + " ";
   span.style.animationDelay = `${index * 0.1}s`; // add delay for each word
+  span.style.display = "inline-block"; // set display to inline-block
+  span.style.transform = "translateY(100%)"; // move span down by 100%
   paragraph.appendChild(span);
+
+  // use setTimeout to delay the animation
+  setTimeout(() => {
+    span.style.transform = "translateY(0)"; // move span up to its original position
+  }, index * 100);
 });
 
 const paragraph1 = document.getElementById("main-paragraph1");
@@ -17,7 +24,14 @@ words1.forEach((word, index) => {
   const span = document.createElement("span");
   span.innerHTML = word + " ";
   span.style.animationDelay = `${index * 0.1}s`; // add delay for each word
+  span.style.display = "inline-block"; // set display to inline-block
+  span.style.transform = "translateY(100%)"; // move span down by 100%
   paragraph1.appendChild(span);
+
+  // use setTimeout to delay the animation
+  setTimeout(() => {
+    span.style.transform = "translateY(0)"; // move span up to its original position
+  }, index * 100);
 });
 
 
@@ -29,5 +43,13 @@ words2.forEach((word, index) => {
   const span = document.createElement("span");
   span.innerHTML = word + " ";
   span.style.animationDelay = `${index * 0.1}s`; // add delay for each word
+  span.style.display = "inline-block"; // set display to inline-block
+  span.style.transform = "translateY(100%)"; // move span down by 100%
   paragraph2.appendChild(span);
+
+  // use setTimeout to delay the animation
+  setTimeout(() => {
+    span.style.transform = "translateY(0)"; // move span up to its original position
+  }, index * 100);
 });
+

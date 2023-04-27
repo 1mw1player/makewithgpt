@@ -71,8 +71,8 @@ footer p {
 
 /* Main styles */
 main {
-  display: flexbox;
-  flex-direction: row;
+  display: flex;
+  flex-direction:column;
   justify-content: left;
   align-items: left;
   min-height:80vh;
@@ -88,6 +88,7 @@ main p {
   color: rgb(5, 5, 5);
   font-family: 'Playfair Display', serif;
   text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -107,14 +108,28 @@ main p span {
   
 }
 
+
+.orange-text {
+  color: orange;
+}
+
+
 @keyframes fade-in {
   from {
     opacity: 0;
+    transform: translateY(-100%);
+  
   }
   to {
     opacity: 1;
+    transform: translateY(0%);
+    
   }
-}
+  }
+
+
+
+
 
 #main-paragraph1 {
   color: rgb(0, 0, 0);
@@ -193,6 +208,12 @@ main p span {
   
 
 /* Other classes */
+
+
+
+
+
+
 .no-wrap {
   white-space: nowrap;
 }
