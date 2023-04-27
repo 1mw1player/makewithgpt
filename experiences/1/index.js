@@ -15,7 +15,25 @@ scoreText.style.fontSize = '24px';
 scoreText.innerHTML = `Score: ${score}`;
 document.body.appendChild(scoreText);
 
-let shapes = [  { type: 'square', x: 200, y: -50, size: 50, color: '#FF0000', angle: 0, speed: 2, acceleration: 0.1 },  { type: 'circle', x: 200, y: -50, size: 50, color: '#00FF00', angle: 0, speed: 2, acceleration: 0.1 }];
+let shapes = [
+  { type: 'square', x: 200, y: -50, size: 50, color: '#FF0000', angle: 0, speed: 2, acceleration: 0.1,clickDelay: 0, },
+  { type: 'circle', x: 200, y: -50, size: 50, color: '#00FF00', angle: 0, speed: 2, acceleration: 0.1,clickDelay: 0, },
+  {
+    type: 'combined',
+    x: Math.random() * canvas.width,
+    y: -50,
+    size: 50,
+    color: getRandomColor(),
+    angle: 0,
+    speed: 2,
+    acceleration: 0.1,
+    circleSize: 50,
+    circleColor: getRandomColor(),
+    clicksRequired: 1,
+    clickDelay: 0,
+  }
+];
+
 
 function getRandomColor() {
   const letters = '0123456789ABCDEF';
@@ -32,25 +50,25 @@ function update() {
 
   // Spawn a new shape at random intervals
   if (Math.random() < 0.01) {
-    const redSquare = shapes.find(shape => shape.type === 'square' && shape.color === '#FF0000');
-    const greenCircle = shapes.find(shape => shape.type === 'circle' && shape.color === '#00FF00');
     const newShape = {
-      type: 'combined',
+      type: "combined",
       x: Math.random() * canvas.width,
       y: -50,
-      size: redSquare.size,
+      size: 50,
       color: getRandomColor(),
-      angle: redSquare.angle,
-      speed: redSquare.speed,
-      acceleration: redSquare.acceleration,
-      circleSize: greenCircle.size,
-      circleColor: getRandomColor()
+      angle: 0,
+      speed: 2,
+      acceleration: 0.1,
+      circleSize: 50,
+      circleColor: getRandomColor(),
+      clicksRequired: 1,
+      clickDelay: 0, // Add clickDelay property
     };
     shapes.push(newShape);
   }
 
   // Iterate through the shapes array and draw each shape
-  shapes.forEach(shape => {
+  shapes.forEach((shape) => {
     ctx.fillStyle = shape.color;
 
     // Move the shape downwards
@@ -61,9 +79,11 @@ function update() {
     if (shape.y + shape.size / 2 > canvas.height) {
       shape.y = canvas.height - shape.size / 2;
       shape.speed *= -0.8;
+      shape.clicksRequired++;
+      shape.clickDelay = 0; // Reset clickDelay when the shape hits the ground
     }
 
-    if (shape.type === 'combined') {
+    if (shape.type === "combined") {
       ctx.translate(shape.x, shape.y);
       ctx.rotate(shape.angle);
       ctx.fillRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
@@ -73,11 +93,16 @@ function update() {
       ctx.fill();
       ctx.rotate(-shape.angle);
       ctx.translate(-shape.x, -shape.y);
-    } else if (shape.type === 'circle') {
+
+      // Increase clickDelay after the shape is clicked
+      if (shape.clickDelay > 0) {
+        shape.clickDelay--;
+      }
+    } else if (shape.type === "circle") {
       ctx.beginPath();
       ctx.arc(shape.x, shape.y, shape.size / 2, 0, Math.PI * 2);
       ctx.fill();
-    } else if (shape.type === 'square') {
+    } else if (shape.type === "square") {
       ctx.translate(shape.x, shape.y);
       ctx.rotate(shape.angle);
       ctx.fillRect(-shape.size / 2, -shape.size / 2, shape.size, shape.size);
@@ -90,17 +115,32 @@ function update() {
   requestAnimationFrame(update);
 }
 
+
 // Start the animation loop
 requestAnimationFrame(update);
 
 
-canvas.addEventListener('click', function(event) {
-    shapes.forEach(function(shape, index) {
-      const distance = Math.sqrt(Math.pow(shape.x - event.clientX, 2) + Math.pow(shape.y - event.clientY, 2));
-      if (distance <= shape.size / 2 || distance <= shape.circleSize / 2) {
-        shapes.splice(index, 1);
+
+canvas.addEventListener('click', function (event) {
+  const indicesToRemove = [];
+
+  shapes.forEach(function (shape, index) {
+    const distance = Math.sqrt(
+      Math.pow(shape.x - event.clientX, 2) + Math.pow(shape.y - event.clientY, 2)
+    );
+    const maxSize = shape.type === 'combined' ? Math.max(shape.size, shape.circleSize) : shape.size;
+    if (distance <= maxSize / 2) {
+      shape.clicksRequired--; // Decrement the clicksRequired
+      if (shape.clicksRequired <= 0) {
+        indicesToRemove.push(index);
         score++;
         scoreText.innerHTML = `Score: ${score}`;
       }
-    });
+    }
   });
+
+  // Remove shapes with indices collected in indicesToRemove array
+  for (let i = indicesToRemove.length - 1; i >= 0; i--) {
+    shapes.splice(indicesToRemove[i], 1);
+  }
+});
