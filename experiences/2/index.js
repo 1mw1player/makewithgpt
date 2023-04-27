@@ -1,65 +1,164 @@
+const gravity = 0.2; // Adjust this value to change how fast the fruits fall
+const defaultsize = 100;
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const fruits = [];
+const fruitImages = [
+  'images/apple.png',
+  'images/orange.png',
+  //'images/banana.png'
+];
 
-const canvas2 = document.getElementById('canvas2');
-const ctx2 = canvas2.getContext("2d");
-canvas2.width = window.innerWidth;
-canvas2.height = window.innerHeight;
 
-// Define the Particle class
-class Particle {
-  constructor(x, y, size, color, angle, speed) {
-    this.x = x;
-    this.y = y;
-    this.size = size;
-    this.color = color;
-    this.angle = angle;
-    this.speed = speed;
-    this.velocity = {
-      x: Math.cos(angle) * speed,
-      y: Math.sin(angle) * speed
-    };
+class Fruit {
+  constructor(x, y, velocityX, velocityY, imageSrc, width = defaultsize, height = defaultsize) {
+      this.x = x;
+      this.y = y;
+      this.velocityX = velocityX;
+      this.velocityY = velocityY;
+      this.image = new Image();
+      this.image.src = imageSrc;
+      this.sliced = false;
+      this.width = width;
+      this.height = height;
   }
 
-  // Update the particle's position and angle
   update() {
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
-    this.angle += 0.01;
+      this.x += this.velocityX;
+      this.velocityY += gravity; // Gravity will affect the fruit's vertical velocity
+      this.y += this.velocityY;
   }
 
-  // Draw the particle on the canvas
   draw() {
-    ctx2.save();
-    ctx2.translate(this.x, this.y);
-    ctx2.rotate(this.angle);
-    ctx2.fillStyle = this.color;
-    ctx2.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-    ctx2.restore();
+      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
 
-let particles = [];
 
-// Add a particle to the particles array on mouse click events
-canvas2.addEventListener('click', (event) => {
-  const angle = Math.random() * Math.PI * 2;
-  const size = Math.random() * 20 + 10;
-  const speed = Math.random() * 5 + 1;
-  particles.push(new Particle(event.clientX, event.clientY, size, '#FF0000', angle, speed));
+function spawnFruit() {
+    const imageSrc = fruitImages[Math.floor(Math.random() * fruitImages.length)];
+    const x = Math.random() * (canvas.width - 100) + 50;
+    const y = canvas.height;
+    const velocityX = Math.random() * 4 - 2;
+    const velocityY = -Math.random() * 10 - 10;
+    
+    fruits.push(new Fruit(x, y, velocityX, velocityY, imageSrc));
+}
+
+function updateFruits() {
+    for (let i = 0; i < fruits.length; i++) {
+        const fruit = fruits[i];
+
+        fruit.update();
+        fruit.draw();
+
+        // Check if the fruit has fallen off the screen, and if so, remove it from the array
+        if (fruit.y > canvas.height) {
+            fruits.splice(i, 1);
+            i--; // Decrement the index to avoid skipping over a fruit
+            if (!fruit.sliced) {
+              loseLife();
+          }
+        }
+    }
+}
+
+// Randomly spawn fruits at intervals
+setInterval(spawnFruit, 1000); // Adjust the interval to control the fruit spawn rate
+
+function distance(x1, y1, x2, y2) {
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function checkSlicing(x, y) {
+  for (let i = 0; i < fruits.length; i++) {
+      const fruit = fruits[i];
+      const dist = distance(x, y, fruit.x + fruit.image.width / 2, fruit.y + fruit.image.height / 2);
+
+      if (dist < fruit.image.width / 2 && !fruit.sliced) {
+          fruit.sliced = true;
+          incrementScore(); // Increment the score when a fruit is sliced
+          // Increment score, play sound, or show visual effects here
+      }
+  }
+}
+
+canvas.addEventListener('mousemove', (event) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  checkSlicing(x, y);
 });
 
-function update() {
-  // Clear the canvas
-  ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+let score = 0;
 
-  // Iterate through the particles array and update and draw each particle
-  particles.forEach(particle => {
-    particle.update();
-    particle.draw();
-  });
-
-  // Request the next animation frame
-  requestAnimationFrame(update);
+function incrementScore() {
+    score++;
 }
 
-// Start the animation loop
-requestAnimationFrame(update);
+function drawScore() {
+    ctx.font = '24px Arial';
+    ctx.fillStyle = 'white';
+    ctx.fillText('Score: ' + score, 10, 30);
+}
+
+let lives = 3;
+
+function loseLife() {
+    lives--;
+}
+
+function drawLives() {
+    ctx.font = '24px Arial';
+    ctx.fillStyle = 'white';
+    ctx.fillText('Lives: ' + lives, canvas.width - 100, 30);
+}
+
+function gameOver() {
+    return lives <= 0;
+}
+
+function restartGame() {
+    console.log("restartGame")
+    score = 0;
+    lives = 3;
+    fruits.length = 0;
+    gameLoop();
+}
+
+canvas.addEventListener('click', (event) => {
+    console.log("click")
+    if (gameOver()) {
+        restartGame();
+    }
+});
+
+
+
+function gameLoop() {
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+    // Update game objects
+    updateFruits();
+
+    // Draw game objects
+    drawScore();
+    drawLives();
+    
+    // Request the next frame if the game is not over
+    if (!gameOver()) {
+      requestAnimationFrame(gameLoop);
+    } else {
+      ctx.font = '48px Arial';
+      ctx.fillStyle = 'white';
+      ctx.fillText('Game Over', canvas.width / 2 - 100, canvas.height / 2);
+      ctx.font = '24px Arial';
+      ctx.fillText('Click to Restart', canvas.width / 2 - 75, canvas.height / 2 + 40);
+    }
+}
+
+gameLoop(); // Start the game loop

@@ -291,6 +291,7 @@ canvas4.addEventListener('click', (event) => {
 window.addEventListener('resize', () => {
   canvas4.width = window.innerWidth;
   canvas4.height = window.innerHeight;
+  
   if (player.color === 'green') { // If the player is blue, re-center them
     player.x = canvas4.width / 2;
     player.y = canvas4.height / 2;
