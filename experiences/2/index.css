@@ -3,12 +3,9 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-
-
-overflow: hidden;
 }
 
-body, html {
+html, body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -18,17 +15,10 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
-.game-container {
-  position: relative;
-  width: 800px;
-  height: 600px;
-  border: 5px solid #fff;
-  overflow: hidden;
-  background-color: #000;
-  user-select: none;
-}
+
 
 #gameCanvas {
   position: absolute;
