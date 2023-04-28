@@ -39,8 +39,8 @@ function spawnFruit() {
     const imageSrc = fruitImages[Math.floor(Math.random() * fruitImages.length)];
     const x = Math.random() * (canvas.width - 100) + 50;
     const y = canvas.height;
-    const velocityX = Math.random() * 4 - 2;
-    const velocityY = -Math.random() * 10 - 10;
+    const velocityX = Math.random() * 2 - 2;
+    const velocityY = -Math.random() * 5 - 10;
     
     fruits.push(new Fruit(x, y, velocityX, velocityY, imageSrc));
 }
