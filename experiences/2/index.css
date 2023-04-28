@@ -28,9 +28,7 @@ html, body {
 }
 
 canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  touch-action: none;
+  -ms-touch-action: none;
 }
+
