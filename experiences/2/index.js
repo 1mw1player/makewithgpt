@@ -50,7 +50,11 @@ function updateFruits() {
         const fruit = fruits[i];
 
         fruit.update();
-        fruit.draw();
+        
+        // If the fruit is sliced, skip the draw() method call
+        if (!fruit.sliced) {
+            fruit.draw();
+        }
 
         // Check if the fruit has fallen off the screen, and if so, remove it from the array
         if (fruit.y > canvas.height) {
@@ -62,6 +66,7 @@ function updateFruits() {
         }
     }
 }
+
 
 // Randomly spawn fruits at intervals
 setInterval(spawnFruit, 1000); // Adjust the interval to control the fruit spawn rate
@@ -111,10 +116,15 @@ function loseLife() {
 }
 
 function drawLives() {
-    ctx.font = '24px Arial';
+    const fontSize = Math.max(Math.min(canvas.width, canvas.height) / 20, 12);
+    const x = canvas.width - (fontSize * 7); // Set x position to 7 times the font size from the right edge of the canvas
+    const y = fontSize * 1.5; // Set y position to 1.5 times the font size from the top edge of the canvas
+    
+    ctx.font = fontSize + 'px Arial';
     ctx.fillStyle = 'white';
-    ctx.fillText('Lives: ' + lives, canvas.width - 100, 30);
+    ctx.fillText('Lives: ' + lives, x, y);
 }
+
 
 function gameOver() {
     return lives <= 0;
@@ -160,5 +170,27 @@ function gameLoop() {
       ctx.fillText('Click to Restart', canvas.width / 2 - 75, canvas.height / 2 + 40);
     }
 }
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Calculate font size based on the new canvas size
+    const fontSize = Math.min(canvas.width, canvas.height) / 20; // You can adjust the font size by changing the divisor (20)
+
+    // Set the font size for the score and lives text
+    ctx.font = fontSize + 'px Arial';
+
+    // Redraw the score and lives text
+    drawScore();
+    drawLives();
+}
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+  });
+  
+  resizeCanvas();
+  gameLoop();
+  
 
 gameLoop(); // Start the game loop
