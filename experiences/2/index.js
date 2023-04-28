@@ -1,196 +1,353 @@
-const gravity = 0.2; // Adjust this value to change how fast the fruits fall
-const defaultsize = 100;
+// Global variables
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const fruits = [];
-const fruitImages = [
-  'images/apple.png',
-  'images/orange.png',
-  //'images/banana.png'
-];
+let lastTime;
+let deltaTime;
 
+// Step 1: Initialize the canvas and context, and ensure the canvas and all other game objects and text drawn resize to the browser window
 
+// Set initial canvas dimensions
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Function to handle canvas resizing
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+// Event listener for window resizing
+window.addEventListener('resize', resizeCanvas);
+
+// Step 3: Implement slash effect on canvas
+
+let mousePosition = { x: 0, y: 0 };
+let slashPoints = [];
+
+// Event listener for mouse movement
+canvas.addEventListener('mousemove', (event) => {
+  mousePosition.x = event.clientX;
+  mousePosition.y = event.clientY;
+});
+
+// Function to draw the slash effect
+function drawSlash() {
+  // Add the current mouse position to the slashPoints array
+  slashPoints.push({ x: mousePosition.x, y: mousePosition.y });
+
+  // Keep the last 10 points in the array for a smooth slash effect
+  if (slashPoints.length > 10) {
+    slashPoints.shift();
+  }
+
+  // Draw the slash effect using the points in the slashPoints array
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'; // Set the color and opacity of the slash
+  ctx.lineWidth = 5; // Set the width of the slash line
+  ctx.beginPath();
+  ctx.moveTo(slashPoints[0].x, slashPoints[0].y);
+
+  for (let i = 1; i < slashPoints.length; i++) {
+    ctx.lineTo(slashPoints[i].x, slashPoints[i].y);
+  }
+
+  ctx.stroke();
+}
+
+// Step 5: Implement the fruit objects
 class Fruit {
-  constructor(x, y, velocityX, velocityY, imageSrc, width = defaultsize, height = defaultsize) {
-      this.x = x;
-      this.y = y;
-      this.velocityX = velocityX;
-      this.velocityY = velocityY;
-      this.image = new Image();
-      this.image.src = imageSrc;
-      this.sliced = false;
-      this.width = width;
-      this.height = height;
+  constructor(x, y, radius, color, speed) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.initialRadius = radius;
+    this.color = color;
+    this.speed = speed;
+    this.sliced = false;
+    this.gravity = 0.1/4;
+    this.velocity = 0;
+    this.rotation = 0;
+    this.rotationSpeed = Math.random() * 0.2 + 0.1;
+    this.pieces = [];
+    this.sliceTime = 0;
   }
 
   update() {
-      this.x += this.velocityX;
-      this.velocityY += gravity; // Gravity will affect the fruit's vertical velocity
-      this.y += this.velocityY;
+    if (!this.sliced) {
+      this.y -= this.speed;
+      this.velocity += this.gravity;
+      this.y += this.velocity;
+      this.rotation += this.rotationSpeed;
+    } else {
+      for (const piece of this.pieces) {
+        piece.velocity += piece.gravity;
+        piece.y += piece.velocity;
+        piece.rotation += piece.rotationSpeed;
+      }
+    }
   }
 
   draw() {
-      ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    if (!this.sliced) {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+
+      ctx.beginPath();
+      ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.restore();
+    } else {
+      for (const piece of this.pieces) {
+        ctx.save();
+        ctx.translate(piece.x, piece.y);
+        ctx.rotate(piece.rotation);
+
+        ctx.beginPath();
+        ctx.arc(0, 0, piece.radius, 0, Math.PI * 2);
+        ctx.fillStyle = piece.color;
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.restore();
+      }
+    }
+  }
+
+  split() {
+    const angle = Math.PI / 8; // Adjust angle
+    const velocity = 10; // Adjust velocity
+    const factor = Math.floor(Math.random() * 5) + 1; // Generate random factor between 1 and 5
+    const x1 = this.x + Math.cos(angle) * this.radius * factor;
+    const y1 = this.y + Math.sin(angle) * this.radius * factor;
+    const x2 = this.x - Math.cos(angle) * this.radius * factor;
+    const y2 = this.y - Math.sin(angle) * this.radius * factor;
+    
+    this.pieces.push(new FruitPiece(x1, y1, this.radius / 2, this.color, velocity, angle));
+    this.pieces.push(new FruitPiece(x2, y2, this.radius / 2, this.color, velocity, -angle));
+  }
+  
+  
+}
+
+class FruitPiece {
+  constructor(x, y, radius, color, speed, angle) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.speed = speed;
+    this.velocity = 0;
+    this.gravity = 0.1/4;
+    this.angle = angle;
+    this.rotation = 0;
+    this.rotationSpeed = Math.random() * 0.2 + 0.1;
+  }
+
+  update() {
+    this.velocity += this.gravity;
+    this.y += this.velocity;
+    this.rotation += this.rotationSpeed;
+    this.x += Math.cos(this.angle) * this.speed;
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+
+    ctx.beginPath();
+    ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.restore();
   }
 }
 
 
+
+
+// Create a sample fruit instance for testing
+const sampleFruit = new Fruit(canvas.width / 2, canvas.height, 20, 'red', 5);
+
+
+
+// Step 6: Implement fruit spawning and movement
+
+const fruits = [];
+const fruitColors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+
 function spawnFruit() {
-    const imageSrc = fruitImages[Math.floor(Math.random() * fruitImages.length)];
-    const x = Math.random() * (canvas.width - 100) + 50;
-    const y = canvas.height;
-    const velocityX = Math.random() * 2 - 2;
-    const velocityY = -Math.random() * 5 - 10;
-    
-    fruits.push(new Fruit(x, y, velocityX, velocityY, imageSrc));
+  const x = Math.random() * (canvas.width - 100) + 50;
+  const y = canvas.height;
+  const radius = 15;
+  const color = fruitColors[Math.floor(Math.random() * fruitColors.length)];
+  const speed = 3 + Math.random() * 5;
+
+  const newFruit = new Fruit(x, y, radius, color, speed);
+  fruits.push(newFruit);
 }
 
-function updateFruits() {
-    for (let i = 0; i < fruits.length; i++) {
-        const fruit = fruits[i];
+function updateAndDrawFruits() {
+  for (let i = 0; i < fruits.length; i++) {
+    const fruit = fruits[i];
+    fruit.update();
+    fruit.draw();
 
-        fruit.update();
-        
-        // If the fruit is sliced, skip the draw() method call
-        if (!fruit.sliced) {
-            fruit.draw();
-        }
-
-        // Check if the fruit has fallen off the screen, and if so, remove it from the array
-        if (fruit.y > canvas.height) {
-            fruits.splice(i, 1);
-            i--; // Decrement the index to avoid skipping over a fruit
-            if (!fruit.sliced) {
-              loseLife();
-          }
-        }
+    // Remove sliced fruits from the array after 1 second
+    if (fruit.sliced && performance.now() - fruit.sliceTime > 1000) {
+      fruits.splice(i, 1);
+      i--;
     }
+  }
 }
 
 
-// Randomly spawn fruits at intervals
-setInterval(spawnFruit, 1000); // Adjust the interval to control the fruit spawn rate
+// Set up fruit spawning interval
+const fruitSpawnInterval = setInterval(spawnFruit, 1500);
 
-function distance(x1, y1, x2, y2) {
-  const dx = x2 - x1;
-  const dy = y2 - y1;
+
+//GET DISTANCE
+function getDistance(point1, point2) {
+  const dx = point1.x - point2.x;
+  const dy = point1.y - point2.y;
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-function checkSlicing(x, y) {
-  for (let i = 0; i < fruits.length; i++) {
-      const fruit = fruits[i];
-      const dist = distance(x, y, fruit.x + fruit.image.width / 2, fruit.y + fruit.image.height / 2);
 
-      if (dist < fruit.image.width / 2 && !fruit.sliced) {
+
+// Step 7: Implement slicing detection
+
+function detectSlicing() {
+  for (const fruit of fruits) {
+    for (let i = 1; i < slashPoints.length; i++) {
+      const previousPoint = slashPoints[i - 1];
+      const currentPoint = slashPoints[i];
+
+      const fruitCenter = {
+        x: fruit.x,
+        y: fruit.y
+      };
+
+      const distanceToPreviousPoint = getDistance(previousPoint, fruitCenter);
+      const distanceToCurrentPoint = getDistance(currentPoint, fruitCenter);
+
+      if (distanceToPreviousPoint < fruit.radius || distanceToCurrentPoint < fruit.radius) {
+        // Fruit has been sliced
+        if (!fruit.sliced) {
           fruit.sliced = true;
+          fruit.sliceAngle = Math.atan2(currentPoint.y - previousPoint.y, currentPoint.x - previousPoint.x);
+          fruit.sliceTime = performance.now();
+
+          // Split the fruit into two separate pieces
+          fruit.split();
+          
           incrementScore(); // Increment the score when a fruit is sliced
-          // Increment score, play sound, or show visual effects here
+          break;
+        }
       }
+    }
   }
 }
 
-canvas.addEventListener('mousemove', (event) => {
-  const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  checkSlicing(x, y);
-});
+
+
+// Step 8: Create a scoring system
 
 let score = 0;
 
 function incrementScore() {
-    score++;
+  score++;
 }
 
-function drawScore() {
-    ctx.font = '24px Arial';
-    ctx.fillStyle = 'white';
-    ctx.fillText('Score: ' + score, 10, 30);
-}
-
-let lives = 3;
-
-function loseLife() {
-    lives--;
-}
-
-function drawLives() {
-    const fontSize = Math.max(Math.min(canvas.width, canvas.height) / 20, 12);
-    const x = canvas.width - (fontSize * 7); // Set x position to 7 times the font size from the right edge of the canvas
-    const y = fontSize * 1.5; // Set y position to 1.5 times the font size from the top edge of the canvas
-    
-    ctx.font = fontSize + 'px Arial';
-    ctx.fillStyle = 'white';
-    ctx.fillText('Lives: ' + lives, x, y);
+function displayScore() {
+  ctx.font = '24px Arial';
+  ctx.fillStyle = 'white';
+  ctx.fillText(`Score: ${score}`, 10, 30);
 }
 
 
-function gameOver() {
-    return lives <= 0;
+// Step 9: Add game over and restart functionality
+
+let isGameOver = false;
+
+function checkGameOver() {
+  for (const fruit of fruits) {
+    if (fruit.y < 0) {
+      isGameOver = true;
+      break;
+    }
+  }
+}
+
+function displayGameOver() {
+  ctx.font = '48px Arial';
+  ctx.fillStyle = 'white';
+  ctx.fillText('Game Over', canvas.width / 2 - 100, canvas.height / 2);
+  ctx.font = '24px Arial';
+  ctx.fillText('Click to restart', canvas.width / 2 - 70, canvas.height / 2 + 50);
 }
 
 function restartGame() {
-    console.log("restartGame")
-    score = 0;
-    lives = 3;
-    fruits.length = 0;
-    gameLoop();
+  isGameOver = false;
+  score = 0;
+  fruits.length = 0;
+  gameLoop();
 }
 
-canvas.addEventListener('click', (event) => {
-    console.log("click")
-    if (gameOver()) {
-        restartGame();
-    }
+canvas.addEventListener('click', () => {
+  if (isGameOver) {
+    restartGame();
+  }
 });
 
 
 
-function gameLoop() {
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+// Step 2: Create a game loop function
 
+// Main game loop function
+function gameLoop(timestamp) {
+  // Calculate the time delta for consistent updates
+  if (!lastTime) {
+    lastTime = timestamp;
+  }
+  deltaTime = timestamp - lastTime;
+  lastTime = timestamp;
 
-    // Update game objects
-    updateFruits();
+  // Clear the canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw game objects
-    drawScore();
-    drawLives();
-    
-    // Request the next frame if the game is not over
-    if (!gameOver()) {
-      requestAnimationFrame(gameLoop);
-    } else {
-      ctx.font = '48px Arial';
-      ctx.fillStyle = 'white';
-      ctx.fillText('Game Over', canvas.width / 2 - 100, canvas.height / 2);
-      ctx.font = '24px Arial';
-      ctx.fillText('Click to Restart', canvas.width / 2 - 75, canvas.height / 2 + 40);
-    }
+  // Call your game functions here (e.g., update(), draw(), etc.)
+
+      if (isGameOver) {
+      displayGameOver();
+      return;
+      }
+
+     // Call the detectSlicing function to detect slicing of fruits
+      detectSlicing();
+      // Update and draw all fruits in the fruits array
+      updateAndDrawFruits();
+      // Call the drawSlash function to draw the slash effect
+      drawSlash();
+
+      // Display the current score
+      displayScore();
+
+       // Check if the game is over
+      checkGameOver();
+
+      // Update and draw the sample fruit
+      sampleFruit.update();
+      sampleFruit.draw();
+
+  // Request the next frame for a smooth animation
+  requestAnimationFrame(gameLoop);
 }
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Calculate font size based on the new canvas size
-    const fontSize = Math.min(canvas.width, canvas.height) / 20; // You can adjust the font size by changing the divisor (20)
-
-    // Set the font size for the score and lives text
-    ctx.font = fontSize + 'px Arial';
-
-    // Redraw the score and lives text
-    drawScore();
-    drawLives();
-}
-  window.addEventListener('resize', () => {
-    resizeCanvas();
-  });
-  
-  resizeCanvas();
-  gameLoop();
-  
-
-gameLoop(); // Start the game loop
+// Start the game loop
+requestAnimationFrame(gameLoop);
