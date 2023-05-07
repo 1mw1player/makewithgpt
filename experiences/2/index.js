@@ -90,7 +90,7 @@ class Fruit {
     this.color = color;
     this.speed = speed;
     this.sliced = false;
-    this.gravity = 0.1/4;
+    this.gravity = 0.1/8;
     this.velocity = 0;
     this.rotation = 0;
     this.rotationSpeed = Math.random() * 0.2 + 0.1;
