@@ -128,3 +128,13 @@ guessInput.addEventListener("keydown", (event) => {
         submitGuess.click();
     }
 });
+
+/* ... */
+
+const backButton = document.getElementById("myButton");
+
+backButton.addEventListener("click", () => {
+    window.location.href = "../../index4.html";
+});
+
+/* ... */

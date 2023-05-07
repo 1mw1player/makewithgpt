@@ -2,6 +2,25 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   background-color: #f3f3f3;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -10,10 +29,16 @@ h1 {
 
 canvas {
   border: 1px solid #4a4a4a;
+  width: 100%;
+  max-width: 600px;
 }
 
 .game-container {
   margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 input[type="text"] {
@@ -22,6 +47,7 @@ input[type="text"] {
   width: 50px;
   text-align: center;
   margin-right: 10px;
+  margin-bottom: 20px;
 }
 
 button {
@@ -31,8 +57,15 @@ button {
   color: #ffffff;
   border: none;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 button:hover {
   background-color: #3a3a3a;
+}
+
+@media screen and (max-width: 600px) {
+  canvas {
+    width: 90%;
+  }
 }
