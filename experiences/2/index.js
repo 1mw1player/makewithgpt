@@ -22,36 +22,63 @@ window.addEventListener('resize', resizeCanvas);
 // Step 3: Implement slash effect on canvas
 
 let mousePosition = { x: 0, y: 0 };
+let isDragging = false;
 let slashPoints = [];
 
-// Event listener for mouse movement
-canvas.addEventListener('mousemove', (event) => {
-  mousePosition.x = event.clientX;
-  mousePosition.y = event.clientY;
-});
+// Event listener for mouse and touch movement
+canvas.addEventListener('mousedown', startDragging);
+canvas.addEventListener('mousemove', drag);
+canvas.addEventListener('mouseup', endDragging);
+
+canvas.addEventListener('touchstart', startDragging);
+canvas.addEventListener('touchmove', drag);
+canvas.addEventListener('touchend', endDragging);
+
+// Function to start dragging
+function startDragging(event) {
+  isDragging = true;
+  mousePosition.x = event.clientX || event.touches[0].clientX;
+  mousePosition.y = event.clientY || event.touches[0].clientY;
+}
+
+// Function to handle dragging
+function drag(event) {
+  if (isDragging) {
+    mousePosition.x = event.clientX || event.touches[0].clientX;
+    mousePosition.y = event.clientY || event.touches[0].clientY;
+  }
+}
+
+// Function to end dragging
+function endDragging(event) {
+  isDragging = false;
+}
 
 // Function to draw the slash effect
 function drawSlash() {
-  // Add the current mouse position to the slashPoints array
-  slashPoints.push({ x: mousePosition.x, y: mousePosition.y });
+  if (isDragging) {
+    // Add the current mouse position to the slashPoints array
+    slashPoints.push({ x: mousePosition.x, y: mousePosition.y });
 
-  // Keep the last 10 points in the array for a smooth slash effect
-  if (slashPoints.length > 10) {
-    slashPoints.shift();
+    // Keep the last 10 points in the array for a smooth slash effect
+    if (slashPoints.length > 10) {
+      slashPoints.shift();
+    }
+
+    // Draw the slash effect using the points in the slashPoints array
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'; // Set the color and opacity of the slash
+    ctx.lineWidth = 5; // Set the width of the slash line
+    ctx.beginPath();
+    ctx.moveTo(slashPoints[0].x, slashPoints[0].y);
+
+    for (let i = 1; i < slashPoints.length; i++) {
+      ctx.lineTo(slashPoints[i].x, slashPoints[i].y);
+    }
+
+    ctx.stroke();
   }
-
-  // Draw the slash effect using the points in the slashPoints array
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'; // Set the color and opacity of the slash
-  ctx.lineWidth = 5; // Set the width of the slash line
-  ctx.beginPath();
-  ctx.moveTo(slashPoints[0].x, slashPoints[0].y);
-
-  for (let i = 1; i < slashPoints.length; i++) {
-    ctx.lineTo(slashPoints[i].x, slashPoints[i].y);
-  }
-
-  ctx.stroke();
 }
+
 
 // Step 5: Implement the fruit objects
 class Fruit {
