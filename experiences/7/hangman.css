@@ -50,19 +50,36 @@ input[type="text"] {
   margin-bottom: 20px;
 }
 
-button {
-  font-size: 18px;
-  padding: 10px;
-  background-color: #4a4a4a;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
+#myButton {
+  display: block;
+    padding: 15px 25px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #363b36;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(5vh + 1px); /* set button position just above the footer */
 
-button:hover {
-  background-color: #3a3a3a;
-}
+  }
+
+  #myButton:hover {
+   background-color: #333533;
+   }
+
+   #myButton:active {
+   background-color: #282b29;
+   box-shadow: 0 5px #666;
+   transform: translateX(-50%);
+   
+ }
 
 @media screen and (max-width: 600px) {
   canvas {
