@@ -21,7 +21,7 @@ class Pipe {
   constructor(x, height) {
     this.x = x;
     this.width = 80;
-    this.gapHeight = 150;
+    this.gapHeight = 180;
     this.topHeight = height;
     this.bottomHeight = canvas.height - height - this.gapHeight;
     this.color = 'green';
@@ -131,7 +131,7 @@ if (birdY + 20 > canvas.height || birdY - 20 < 0 || isGameOver) {
 
   ctx.fillStyle = 'white';
   ctx.font = '24px Arial';
-  ctx.fillText('Press Enter to Restart', canvas.width / 2, canvas.height / 2 + 50);
+  ctx.fillText('Touch to Restart', canvas.width / 2, canvas.height / 2 + 50);
 
   return;
 }
