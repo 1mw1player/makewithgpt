@@ -45,7 +45,7 @@ class Pipe {
 
 // Create initial pipes
 for (let i = 0; i < 3; i++) {
-  pipes.push(new Pipe(canvas.width + i * (canvas.width / 3), Math.floor(Math.random() * (canvas.height - 200)) + 100));
+  pipes.push(new Pipe(canvas.width + i * (canvas.width / 3), Math.floor(Math.random() * (canvas.height - 100)) + 100));
 }
 
 
@@ -104,7 +104,7 @@ function update() {
 
   // Add new pipe if needed
   if (pipes.length < 3 && pipes[pipes.length - 1].x < canvas.width - (canvas.width / 3)) {
-    pipes.push(new Pipe(canvas.width, Math.floor(Math.random() * (canvas.height - 200)) + 100));
+    pipes.push(new Pipe(canvas.width, Math.floor(Math.random() * (canvas.height - 100)) + 100));
   }
 
 // Draw the score
