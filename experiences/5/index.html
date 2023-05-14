@@ -10,7 +10,12 @@
             margin: 0;
         }
 		canvas {
- 
+  			position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+  border: thin solid black;
 }
 
 				
@@ -21,8 +26,7 @@
 <script type="text/javascript">
 
 // NOTE: Originally 640x1000. Other possible sizes: 512x800, 400x625
-var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
-
+var game = new Phaser.Game(400, 625, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
 
 function preload() {
 
@@ -307,7 +311,7 @@ document.body.appendChild(button);
 	position: absolute;
   	left: 50%;
   	transform: translateX(-50%);
-  	bottom: calc(2vh + 5px); /* set button position just above the footer */
+  	bottom: calc(10vh + 5px); /* set button position just above the footer */
 
 	}
 
