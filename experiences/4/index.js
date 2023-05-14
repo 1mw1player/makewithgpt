@@ -37,13 +37,15 @@ let player = {
 };
 
 
+let isGameOver = false; // Define isGameOver variable here
+
+
 
 function spawnPlayer() {
   if (destroyedPlayers >= 3) {
-    player.color = 'green'; // Change the color of the player if the score is 5 or greater
+    player.color = 'green';
     player.speed = 2;
 
-    // Spawn new enemies around the player, further away
     for (let i = 0; i < 5; i++) {
       let x = player.x + Math.random() * 600 - 150;
       let y = player.y + Math.random() * 600 - 150;
@@ -51,9 +53,16 @@ function spawnPlayer() {
       let enemy = new Enemy(x, y, speed);
       enemies.push(enemy);
     }
+
+    if (player.colorParts.every(part => part === 'red')) {
+      isGameOver = true;
+      message = 'Game Over! Click to restart.';
+      showMessage = true;
+    }
+
   } else {
-    player.color = 'red'; // Otherwise, set the color to red
-    player.speed = 2; // Set the player speed back to 5 if they turn red
+    player.color = 'white'; // Set the color to white when a new player spawns
+    player.speed = 5; // Set the player speed back to 5 when a new player spawns
   }
 
   player = {
@@ -62,7 +71,7 @@ function spawnPlayer() {
     size: 10,
     angle: 0,
     speed: player.speed,
-    color: player.color, // Set the color of the new player object
+    color: player.color,
     colorParts: new Array(10).fill('white')
   };
 }
@@ -234,12 +243,26 @@ function render() {
 }
 
 
-// Function to update and render the game
 function gameLoop() {
-  update();
-  render();
-  requestAnimationFrame(gameLoop);
+  if (isGameOver) {
+    // Display game over message and restart button
+    context.fillStyle = 'white';
+    context.font = 'bold 50px Arial';
+    context.textAlign = 'center';
+    context.fillText('Game Over', canvas4.width / 2, canvas4.height / 2 - 50);
+    context.font = 'bold 30px Arial';
+    context.fillText('Click to restart', canvas4.width / 2, canvas4.height / 2 + 50);
+
+    // Add event listener to restart game on click
+    canvas4.addEventListener('click', restartGame);
+  } else {
+    // Update and render the game
+    update();
+    render();
+    requestAnimationFrame(gameLoop);
+  }
 }
+
 
 
 // Add an event listener to the canvas to store the mouse click position
