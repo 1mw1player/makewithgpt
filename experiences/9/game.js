@@ -1,6 +1,8 @@
 // Set up the canvas and context
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
+canvas.style.backgroundColor = 'black'; // Change background color to black
+
 
 // Set the canvas size to match the window size
 canvas.width = window.innerWidth;
@@ -77,7 +79,7 @@ function update() {
   // Draw the bird
   ctx.fillStyle = 'yellow';
   ctx.beginPath();
-  ctx.arc(birdX, birdY, 20, 0, 2 * Math.PI);
+  ctx.arc(birdX, birdY, 30, 0, 2 * Math.PI);
   ctx.fill();
 
   // Update and draw pipes
