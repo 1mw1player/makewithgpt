@@ -111,7 +111,7 @@ if (pipes.length < 3 && pipes[pipes.length - 1].x < canvas.width - (canvas.width
 }
 
 // Draw the score
-ctx.fillStyle = 'black';
+ctx.fillStyle = 'white';
 ctx.font = '24px Arial';
 ctx.fillText(`Score: ${score}`, 10, 30);
 
@@ -128,7 +128,7 @@ if (birdY + 20 > canvas.height || birdY - 20 < 0 || isGameOver) {
   ctx.textAlign = 'center';
   ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 50);
 
-  ctx.fillStyle = 'black';
+  ctx.fillStyle = 'white';
   ctx.font = '24px Arial';
   ctx.fillText(`Score: ${score}`, canvas.width / 2, canvas.height / 2);
 
