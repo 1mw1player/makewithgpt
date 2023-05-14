@@ -24,7 +24,7 @@ class Pipe {
   constructor(x, height) {
     this.x = x;
     this.width = 30; // Reduced width for mobile screens
-    this.gapHeight = 400; // Increased gap height for easier navigation
+    this.gapHeight = 800; // Increased gap height for easier navigation
     this.topHeight = height;
     this.bottomHeight = canvas.height - height - this.gapHeight;
     this.color = 'green';
