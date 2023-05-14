@@ -2,6 +2,10 @@
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 
+// Set the canvas size to match the window size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 // Initialize game variables
 let birdX = 50;
 let birdY = canvas.height / 2;
@@ -41,15 +45,18 @@ class Pipe {
 
 // Create initial pipes
 for (let i = 0; i < 3; i++) {
-  pipes.push(new Pipe(canvas.width + i * 300, Math.floor(Math.random() * (canvas.height - 200)) + 100));
+  pipes.push(new Pipe(canvas.width + i * (canvas.width / 3), Math.floor(Math.random() * (canvas.height - 200)) + 100));
 }
 
+
 // Handle player input
-document.addEventListener('keydown', event => {
-  if (event.code === 'Space' && !isGameOver) {
+// Handle player input
+canvas.addEventListener('touchstart', event => {
+  if (!isGameOver) {
     birdVelocity = jumpVelocity;
   }
-});
+  event.preventDefault();
+}, false);
 
 // Update function called on each frame
 function update() {
@@ -59,6 +66,8 @@ function update() {
   // Update the bird position
   birdVelocity += gravity;
   birdY += birdVelocity;
+  if (birdY > canvas.height) birdY = canvas.height;
+  if (birdY < 0) birdY = 0;
 
   // Draw the bird
   ctx.fillStyle = 'yellow';
@@ -90,7 +99,7 @@ function update() {
   }
 
   // Add new pipe if needed
-  if (pipes.length < 3 && pipes[pipes.length - 1].x < canvas.width - 300) {
+  if (pipes.length < 3 && pipes[pipes.length - 1].x < canvas.width - (canvas.width / 3)) {
     pipes.push(new Pipe(canvas.width, Math.floor(Math.random() * (canvas.height - 200)) + 100));
   }
 
@@ -121,11 +130,13 @@ if (birdY + 20 > canvas.height || birdY - 20 < 0 || isGameOver) {
   ctx.fillText('Press Enter to Restart', canvas.width / 2, canvas.height / 2 + 50);
 
   // Handle restart
-  document.addEventListener('keydown', event => {
-	if (event.code === 'Enter') {
-	  location.reload();
-	}
-  });
+  canvas.addEventListener('touchstart', event => {
+    if (!isGameOver) {
+      birdVelocity = jumpVelocity;
+    }
+    event.preventDefault();
+  }, false);
+  
 
   return;
 }
@@ -137,3 +148,8 @@ requestAnimationFrame(update);
 // Start the game loop
 requestAnimationFrame(update);
 
+// Listen for the window resize event to adjust the canvas size
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
