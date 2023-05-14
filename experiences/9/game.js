@@ -17,11 +17,12 @@ let pipes = [];
 let isGameOver = false;
 
 // Define a class for Pipe objects
+// Define a class for Pipe objects
 class Pipe {
   constructor(x, height) {
     this.x = x;
-    this.width = 80;
-    this.gapHeight = 200;
+    this.width = 60; // Reduced width for mobile screens
+    this.gapHeight = 200; // Increased gap height for easier navigation
     this.topHeight = height;
     this.bottomHeight = canvas.height - height - this.gapHeight;
     this.color = 'green';
@@ -45,7 +46,7 @@ class Pipe {
 
 // Create initial pipes
 for (let i = 0; i < 3; i++) {
-  pipes.push(new Pipe(canvas.width + i * (canvas.width / 3), Math.floor(Math.random() * (canvas.height - 100)) + 100));
+  pipes.push(new Pipe(canvas.width + i * (canvas.width / 2), Math.floor(Math.random() * (canvas.height - this.gapHeight - 50)) + 50));
 }
 
 
@@ -102,10 +103,10 @@ function update() {
     }
   }
 
-  // Add new pipe if needed
-  if (pipes.length < 3 && pipes[pipes.length - 1].x < canvas.width - (canvas.width / 3)) {
-    pipes.push(new Pipe(canvas.width, Math.floor(Math.random() * (canvas.height - 100)) + 100));
-  }
+ // Add new pipe if needed
+if (pipes.length < 3 && pipes[pipes.length - 1].x < canvas.width - (canvas.width / 2)) {
+  pipes.push(new Pipe(canvas.width, Math.floor(Math.random() * (canvas.height - 200 - 50)) + 50));
+}
 
 // Draw the score
 ctx.fillStyle = 'black';
