@@ -66,7 +66,7 @@ input[type="text"] {
   position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: calc(5vh + 1px); /* set button position just above the footer */
+    bottom: calc(2vh + 1px); /* set button position just above the footer */
 
   }
 
