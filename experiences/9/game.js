@@ -49,14 +49,18 @@ for (let i = 0; i < 3; i++) {
 }
 
 
-// Handle player input
-// Handle player input
+// Handle player input and game restart
 canvas.addEventListener('touchstart', event => {
   if (!isGameOver) {
+    // If the game is not over, make the bird jump
     birdVelocity = jumpVelocity;
+  } else {
+    // If the game is over, reload the page to restart the game
+    location.reload();
   }
   event.preventDefault();
 }, false);
+
 
 // Update function called on each frame
 function update() {
@@ -128,15 +132,6 @@ if (birdY + 20 > canvas.height || birdY - 20 < 0 || isGameOver) {
   ctx.fillStyle = 'white';
   ctx.font = '24px Arial';
   ctx.fillText('Press Enter to Restart', canvas.width / 2, canvas.height / 2 + 50);
-
-  // Handle restart
-  canvas.addEventListener('touchstart', event => {
-    if (!isGameOver) {
-      birdVelocity = jumpVelocity;
-    }
-    event.preventDefault();
-  }, false);
-  
 
   return;
 }
