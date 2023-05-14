@@ -23,7 +23,7 @@ let isGameOver = false;
 class Pipe {
   constructor(x, height) {
     this.x = x;
-    this.width = 60; // Reduced width for mobile screens
+    this.width = 30; // Reduced width for mobile screens
     this.gapHeight = 200; // Increased gap height for easier navigation
     this.topHeight = height;
     this.bottomHeight = canvas.height - height - this.gapHeight;
