@@ -20,8 +20,8 @@ let isGameOver = false;
 class Pipe {
   constructor(x, height) {
     this.x = x;
-    this.width = 120;
-    this.gapHeight = 180;
+    this.width = 80;
+    this.gapHeight = 200;
     this.topHeight = height;
     this.bottomHeight = canvas.height - height - this.gapHeight;
     this.color = 'green';
