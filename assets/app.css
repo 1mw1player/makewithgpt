@@ -33,6 +33,7 @@ body {
 
 /* Header Styles */
 header {
+  background-color: #000000;
   background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
   color: #ffffff;
   height: 10vh;
@@ -40,10 +41,9 @@ header {
   justify-content: center;
   align-items: center;
   font-size: large;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15); /* add box shadow */
-  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
 }
+
 
 /* Footer Styles */
 footer {
