@@ -16,16 +16,17 @@ let isDraggingCircle1 = false;
 let isDraggingCircle2 = false;
 let previousMousePosition = {};
 
-const squareSize = 100;
+const squareSize = 80;
 const squareColor = 'white';
 
 
 
 // Define x and y coordinates for the squares
-const square1X = circleX ;
-const square1Y = circleY -50;
-const square2X = circle2X ;
-const square2Y = circle2Y -50;
+// Define x and y coordinates for the squares
+const square1X = canvas.width / 2;
+const square1Y = 0; // Top of the canvas
+const square2X = canvas.width / 2;
+const square2Y = canvas.height - squareSize; // Bottom of the canvas, assuming you have a squareSize variable
 
 let blackBallX = canvas.width / 2;
 let blackBallY = canvas.height / 2;
@@ -167,6 +168,8 @@ canvas.addEventListener('touchend', (event) => {
 
 ///collision funtions////
 
+let score1 = 0; // Score for the left side
+let score2 = 0; // Score for the right side
 
 function checkCollision() {
     // Check for collision with the red circle
@@ -196,6 +199,8 @@ function checkCollision() {
     ) {
       blackBallX = canvas.width / 2;
       blackBallY = canvas.height / 2;
+      score1 = 0; // Reset score for the left side
+      score2++; // Increase score for the right side
     }
   
     if (
@@ -206,12 +211,15 @@ function checkCollision() {
     ) {
       blackBallX = canvas.width / 2;
       blackBallY = canvas.height / 2;
+      score2 = 0; // Reset score for the right side
+      score1++; // Increase score for the left side
     }
   }
   
 
 
 ///render funtions////
+
 
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -231,12 +239,28 @@ function render() {
       blackBallX += blackBallSpeedX;
       blackBallY += blackBallSpeedY;
     }
-  
+
     // Check for collision with white squares
-    if (checkCollision(blackBallX, blackBallY, square1X, square1Y, squareSize) ||
-        checkCollision(blackBallX, blackBallY, square2X, square2Y, squareSize)) {
+    if (
+      blackBallX >= square1X &&
+      blackBallX <= square1X + squareSize &&
+      blackBallY >= square1Y &&
+      blackBallY <= square1Y + squareSize
+    ) {
       blackBallX = canvas.width / 2;
       blackBallY = canvas.height / 2;
+    
+    }
+    
+    if (
+      blackBallX >= square2X &&
+      blackBallX <= square2X + squareSize &&
+      blackBallY >= square2Y &&
+      blackBallY <= square2Y + squareSize
+    ) {
+      blackBallX = canvas.width / 2;
+      blackBallY = canvas.height / 2;
+     
     }
     
     // Draw the black ball and update its position
@@ -262,9 +286,20 @@ function render() {
   
     drawCircle(circleX, circleY, 'red');
     drawCircle(circle2X, circle2Y, 'blue');
+
+  
+    let ctx1 = canvas.getContext('2d');
+    ctx1.font = '20px Arial';
+    ctx1.fillStyle = 'black';
+    ctx1.textAlign = 'center';
+    ctx1.fillText(`Score: ${score1}`, canvas.width / 4, 30); // Display score1
+    ctx1.fillText(`Score: ${score2}`, (3 * canvas.width) / 4, 30); // Display score2
+
+    
   
     requestAnimationFrame(render);
   }
+
   
   
   render();
