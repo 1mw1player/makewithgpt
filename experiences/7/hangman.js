@@ -134,7 +134,7 @@ guessInput.addEventListener("keydown", (event) => {
 const backButton = document.getElementById("myButton");
 
 backButton.addEventListener("click", () => {
-    window.location.href = "../2/index.html";
+    window.location.href = "../../index.html";
 });
 
 /* ... */
