@@ -108,96 +108,61 @@ function getMousePosition(event) {
 
 ///touch funtions///
 
-function getTouchPosition(event) {
-  const rect = canvas.getBoundingClientRect();
-  return {
-      x: event.touches[0].clientX - rect.left,
-      y: event.touches[0].clientY - rect.top
-  };
-}
+// Create an object to hold active touches
+let activeTouches = {};
 
-canvas.addEventListener('touchstart', (event) => {
-  event.preventDefault(); // Prevent scrolling on touch devices
-  const touchPosition = getTouchPosition(event);
-  if (Math.sqrt((touchPosition.x - circleX)**2 + (touchPosition.y - circleY)**2) <= circleRadius) {
-      isDraggingCircle1 = true;
-  }
-  if (Math.sqrt((touchPosition.x - circle2X)**2 + (touchPosition.y - circle2Y)**2) <= circleRadius) {
-      isDraggingCircle2 = true;
-  }
-  previousMousePosition = touchPosition;
-}, {passive: false});
-
-canvas.addEventListener('touchmove', (event) => {
-  event.preventDefault(); // Prevent scrolling on touch devices
-  const touchPosition = getTouchPosition(event);
-  if (isDraggingCircle1) {
-      circleX += touchPosition.x - previousMousePosition.x;
-      circleY += touchPosition.y - previousMousePosition.y;
-      if (circleY > canvas.height/2 - circleRadius) {
-          circleY = canvas.height/2 - circleRadius;
-      }
-  }
-  if (isDraggingCircle2) {
-      circle2X += touchPosition.x - previousMousePosition.x;
-      circle2Y += touchPosition.y - previousMousePosition.y;
-      if (circle2Y < canvas.height/2 + circleRadius) {
-          circle2Y = canvas.height/2 + circleRadius;
-      }
-  }
-  previousMousePosition = touchPosition;
-}, {passive: false});
-
-canvas.addEventListener('touchend', (event) => {
-  isDraggingCircle1 = false;
-  isDraggingCircle2 = false;
-});
-///touch funtions///
-
-function getTouchPosition(event) {
+function getTouchPosition(touch, canvas) {
     const rect = canvas.getBoundingClientRect();
     return {
-        x: event.touches[0].clientX - rect.left,
-        y: event.touches[0].clientY - rect.top
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top
     };
 }
 
 canvas.addEventListener('touchstart', (event) => {
-    event.preventDefault(); // Prevent scrolling on touch devices
-    const touchPosition = getTouchPosition(event);
-    if (Math.sqrt((touchPosition.x - circleX)**2 + (touchPosition.y - circleY)**2) <= circleRadius) {
-        isDraggingCircle1 = true;
+    event.preventDefault();
+    for (let touch of event.changedTouches) {
+        const touchPosition = getTouchPosition(touch, canvas);
+        if (Math.sqrt((touchPosition.x - circleX)**2 + (touchPosition.y - circleY)**2) <= circleRadius) {
+            activeTouches[touch.identifier] = { circle: 'circle1', previousTouchPosition: touchPosition };
+        } else if (Math.sqrt((touchPosition.x - circle2X)**2 + (touchPosition.y - circle2Y)**2) <= circleRadius) {
+            activeTouches[touch.identifier] = { circle: 'circle2', previousTouchPosition: touchPosition };
+        }
     }
-    if (Math.sqrt((touchPosition.x - circle2X)**2 + (touchPosition.y - circle2Y)**2) <= circleRadius) {
-        isDraggingCircle2 = true;
-    }
-    previousMousePosition = touchPosition;
 }, {passive: false});
 
 canvas.addEventListener('touchmove', (event) => {
-    event.preventDefault(); // Prevent scrolling on touch devices
-    const touchPosition = getTouchPosition(event);
-    if (isDraggingCircle1) {
-        circleX += touchPosition.x - previousMousePosition.x;
-        circleY += touchPosition.y - previousMousePosition.y;
-        if (circleY > canvas.height/2 - circleRadius) {
-            circleY = canvas.height/2 - circleRadius;
+    event.preventDefault();
+    for (let touch of event.changedTouches) {
+        if (touch.identifier in activeTouches) {
+            const touchPosition = getTouchPosition(touch, canvas);
+            const previousTouchPosition = activeTouches[touch.identifier].previousTouchPosition;
+            if (activeTouches[touch.identifier].circle === 'circle1') {
+                circleX += touchPosition.x - previousTouchPosition.x;
+                circleY += touchPosition.y - previousTouchPosition.y;
+                if (circleY > canvas.height/2 - circleRadius) {
+                    circleY = canvas.height/2 - circleRadius;
+                }
+            } else if (activeTouches[touch.identifier].circle === 'circle2') {
+                circle2X += touchPosition.x - previousTouchPosition.x;
+                circle2Y += touchPosition.y - previousTouchPosition.y;
+                if (circle2Y < canvas.height/2 + circleRadius) {
+                    circle2Y = canvas.height/2 + circleRadius;
+                }
+            }
+            activeTouches[touch.identifier].previousTouchPosition = touchPosition;
         }
     }
-    if (isDraggingCircle2) {
-        circle2X += touchPosition.x - previousMousePosition.x;
-        circle2Y += touchPosition.y - previousMousePosition.y;
-        if (circle2Y < canvas.height/2 + circleRadius) {
-            circle2Y = canvas.height/2 + circleRadius;
-        }
-    }
-    previousMousePosition = touchPosition;
 }, {passive: false});
 
 canvas.addEventListener('touchend', (event) => {
-    isDraggingCircle1 = false;
-    isDraggingCircle2 = false;
-});
+    event.preventDefault();
+    for (let touch of event.changedTouches) {
+        if (touch.identifier in activeTouches) {
+            delete activeTouches[touch.identifier];
+        }
+    }
+}, {passive: false});
 
 
 ///collision funtions////
