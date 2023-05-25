@@ -1,13 +1,85 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Canvas Example</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
 <body>
-  <canvas id="backgroundCanvas"></canvas>
-  <canvas id="foregroundCanvas"></canvas>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
 
-  <script src="game.js"></script>
+        var player1 = {
+            x: 100,
+            y: 300,
+            width: 50,
+            height: 50,
+            color: "blue",
+            left: false,
+            right: false
+        }
+
+        var player2 = {
+            x: 600,
+            y: 300,
+            width: 50,
+            height: 50,
+            color: "red",
+            left: false,
+            right: false
+        }
+
+        function drawPlayer(player) {
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function updateGame() {
+            clearCanvas();
+            if (player1.left) player1.x -= 5;
+            if (player1.right) player1.x += 5;
+            if (player2.left) player2.x -= 5;
+            if (player2.right) player2.x += 5;
+            drawPlayer(player1);
+            drawPlayer(player2);
+        }
+
+        setInterval(updateGame, 20);
+
+        window.addEventListener("keydown", function(event) {
+            switch (event.key) {
+                case "a":
+                    player1.left = true;
+                    break;
+                case "d":
+                    player1.right = true;
+                    break;
+                case "j":
+                    player2.left = true;
+                    break;
+                case "l":
+                    player2.right = true;
+                    break;
+            }
+        })
+
+        window.addEventListener("keyup", function(event) {
+            switch (event.key) {
+                case "a":
+                    player1.left = false;
+                    break;
+                case "d":
+                    player1.right = false;
+                    break;
+                case "j":
+                    player2.left = false;
+                    break;
+                case "l":
+                    player2.right = false;
+                    break;
+            }
+        })
+    </script>
 </body>
 </html>
