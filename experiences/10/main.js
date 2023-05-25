@@ -1,92 +1,151 @@
 const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
 
- let obstacles = [
-            
-   // First triangle
-   { start: { x: 200, y: 100 }, end: { x: 400, y: 200 } },
-   { start: { x: 400, y: 200 }, end: { x: 200, y: 300 } },
-   { start: { x: 200, y: 300 }, end: { x: 200, y: 100 } },
- 
-   // Second triangle
-   { start: { x: 600, y: 400 }, end: { x: 800, y: 500 } },
-   { start: { x: 800, y: 500 }, end: { x: 600, y: 600 } },
-   { start: { x: 600, y: 600 }, end: { x: 600, y: 400 } },
-    ];
+        let polygons = [
+            [
+                { x: window.innerWidth - 150, y: 50 },
+                { x: window.innerWidth - 50, y: 50 },
+                { x: window.innerWidth - 50, y: 150 },
+                { x: window.innerWidth - 150, y: 150 }
+            ]
+            // ... other polygons ...
+        ];
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        
+            polygons = [
+                [
+                    {x: window.innerWidth - 150, y: 50},
+                    {x: window.innerWidth - 50, y: 50},
+                    {x: window.innerWidth - 50, y: 150},
+                    {x: window.innerWidth - 150, y: 150}
+                ]
+            ];
         }
+        
 
         function drawObstacles() {
             ctx.strokeStyle = '#fff';
-            obstacles.forEach(o => {
+            polygons.forEach(polygon => {
                 ctx.beginPath();
-                ctx.moveTo(o.start.x, o.start.y);
-                ctx.lineTo(o.end.x, o.end.y);
+                ctx.moveTo(polygon[0].x, polygon[0].y);
+                for (let i = 1; i < polygon.length; i++) {
+                    ctx.lineTo(polygon[i].x, polygon[i].y);
+                }
+                ctx.closePath();
                 ctx.stroke();
             });
         }
 
         
+        
         function castLight(sourceX, sourceY) {
             let rays = [];
             let maxDist = Math.hypot(canvas.width, canvas.height);
-            let startAngle = -45; // Adjust the starting angle of the rays
-            let endAngle = 45; // Adjust the ending angle of the rays
-            for (let i = startAngle; i <= endAngle; i += 1) { // Iterate within the desired angle range
-                let rad = Math.PI / 180 * i;
-                let ray = { x: sourceX + maxDist * Math.cos(rad), y: sourceY + maxDist * Math.sin(rad) };
-                let closestIntersection = null;
-        
-                obstacles.forEach(obstacle => {
-                    let denom = (sourceX - ray.x) * (obstacle.start.y - obstacle.end.y) -
-                                (sourceY - ray.y) * (obstacle.start.x - obstacle.end.x);
-                    let t = ((sourceX - obstacle.start.x) * (obstacle.start.y - obstacle.end.y) -
-                             (sourceY - obstacle.start.y) * (obstacle.start.x - obstacle.end.x)) / denom;
-                    let u = -((sourceX - ray.x) * (sourceY - obstacle.start.y) -
-                              (sourceY - ray.y) * (sourceX - obstacle.start.x)) / denom;
-                    if (t > 0 && t < 1 && u > 0) {
-                        let pt = {
-                            x: sourceX + t * (ray.x - sourceX),
-                            y: sourceY + t * (ray.y - sourceY)
-                        };
-                        if (!closestIntersection || Math.hypot(sourceX - pt.x, sourceY - pt.y) <
-                            Math.hypot(sourceX - closestIntersection.x, sourceY - closestIntersection.y)) {
-                            closestIntersection = pt;
-                        }
+          
+            polygons.forEach((polygon) => {
+              polygon.forEach((vertex, index) => {
+                // Cast two rays per vertex
+                let angles = [Math.atan2(vertex.y - sourceY, vertex.x - sourceX)];
+                angles.push(angles[0] - 0.00001, angles[0] + 0.00001);
+                angles.forEach((angle) => {
+                  let ray = {
+                    x: sourceX + maxDist * Math.cos(angle),
+                    y: sourceY + maxDist * Math.sin(angle),
+                  };
+                  let closestIntersection = null;
+                  let intersectsEdge = false;
+          
+                  for (let i = 0; i < polygon.length; i++) {
+                    let start = polygon[i];
+                    let end = polygon[(i + 1) % polygon.length];
+          
+                    let denom =
+                      (end.y - start.y) * (ray.x - sourceX) -
+                      (end.x - start.x) * (ray.y - sourceY);
+                    let nume_a =
+                      (end.x - start.x) * (sourceY - start.y) -
+                      (end.y - start.y) * (sourceX - start.x);
+                    let nume_b =
+                      (ray.x - sourceX) * (sourceY - start.y) -
+                      (ray.y - sourceY) * (sourceX - start.x);
+          
+                    if (denom === 0) {
+                      continue;
                     }
+          
+                    let u_a = nume_a / denom;
+                    let u_b = nume_b / denom;
+          
+                    if (u_a >= 0 && u_a <= 1 && u_b > 0) {
+                      let pt = {
+                        x: sourceX + u_a * (ray.x - sourceX),
+                        y: sourceY + u_a * (ray.y - sourceY),
+                      };
+          
+                      // Check if the point is on the edge of the square
+                      if (
+                        (pt.x === polygon[0].x && pt.y >= polygon[0].y && pt.y <= polygon[2].y) || // Left edge
+                        (pt.x === polygon[1].x && pt.y >= polygon[0].y && pt.y <= polygon[2].y) || // Right edge
+                        (pt.y === polygon[0].y && pt.x >= polygon[0].x && pt.x <= polygon[1].x) || // Top edge
+                        (pt.y === polygon[2].y && pt.x >= polygon[0].x && pt.x <= polygon[1].x)    // Bottom edge
+                      ) {
+                        intersectsEdge = true;
+                        break;
+                      }
+          
+                      if (
+                        !closestIntersection ||
+                        Math.hypot(sourceX - pt.x, sourceY - pt.y) <
+                          Math.hypot(
+                            sourceX - closestIntersection.x,
+                            sourceY - closestIntersection.y
+                          )
+                      ) {
+                        closestIntersection = pt;
+                      }
+                    }
+                  }
+          
+                  if (closestIntersection && !intersectsEdge) {
+                    rays.push(closestIntersection);
+                  } else {
+                    rays.push(ray);
+                  }
                 });
-        
-                // If there are no obstacles or an intersection was found, add the ray
-                if (!obstacles.length || closestIntersection) {
-                    rays.push(closestIntersection || ray);
-                }
-            }
-        
-            if (!rays[0]) return;
-
-              // Sort rays based on angle relative to the light source
+              });
+            });
+          
+            // Sort rays based on angle relative to the light source
             rays.sort((a, b) => {
-            let angleA = Math.atan2(a.y - sourceY, a.x - sourceX);
-            let angleB = Math.atan2(b.y - sourceY, b.x - sourceX);
-            return angleA - angleB;
-                });
-        
+              let angleA = Math.atan2(a.y - sourceY, a.x - sourceX);
+              let angleB = Math.atan2(b.y - sourceY, b.x - sourceX);
+              return angleA - angleB;
+            });
+          
             ctx.beginPath();
-            ctx.moveTo(rays[0].x, rays[0].y);
-            rays.forEach(ray => ctx.lineTo(ray.x, ray.y));
+            ctx.moveTo(sourceX, sourceY); // Start from the light source
+            rays.forEach((ray) => ctx.lineTo(ray.x, ray.y));
             ctx.closePath();
-        
-            let gradient = ctx.createRadialGradient(sourceX, sourceY, .1, sourceX, sourceY, 100)//canvas.width);
-            //gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-            //gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            gradient.addColorStop(0, 'rgba(255, 100, 100, 1)');  // red at the center
-            gradient.addColorStop(1, 'rgba(255, 100, 100, 0)');  // fades to transparent
+          
+            let gradient = ctx.createRadialGradient(
+              sourceX,
+              sourceY,
+              0,
+              sourceX,
+              sourceY,
+              maxDist
+            );
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1)'); // white at the center
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)'); // fades to transparent
             ctx.fillStyle = gradient;
             ctx.fill();
-        }
+          }
+          
+        
+        
         
 
         function animate(e) {
