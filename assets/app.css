@@ -236,7 +236,7 @@ main p span {
 
 @media only screen and (max-width: 768px) {
   .button-container {
-    bottom: 5vh ;
+    bottom: 3vh ;
   }
 }
 
