@@ -237,12 +237,12 @@ main p span {
 
 @media only screen and (max-width: 768px) {
   .button-container {
-    bottom: 5vh ;
+    bottom: 12vh ;
   }
 }
 
 @media only screen and (min-width: 769px) {
   .button-container {
-    bottom: calc(10vh + 0px); /* set button position just above the footer */
+    bottom: calc(12vh + 0px); /* set button position just above the footer */
   }
 }
