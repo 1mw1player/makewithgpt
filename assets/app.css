@@ -250,13 +250,6 @@ main p span {
 
 @media only screen and (max-width: 768px) {
   .button-container {
-    bottom: 10vh;
-  }
-}
-
-@media only screen and (min-width: 769px) {
-  .button-container {
-    bottom: calc(8vh + 2px);
-    /* set button position just above the footer */
+    flex-direction: column;
   }
 }
