@@ -174,7 +174,7 @@ main p span {
   border: none;
   border-radius: 15px;
   box-shadow: 0 9px #494646;
-  margin: 0 50px;
+  margin: 0;
   /* add some margin between the buttons */
 
 }
