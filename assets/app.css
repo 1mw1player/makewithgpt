@@ -151,7 +151,7 @@ main p span {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(1vh + 0px); /* set button position just above the footer */
+  bottom: calc(12vh + 0px); /* set button position just above the footer */
 }
 
 
