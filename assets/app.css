@@ -246,6 +246,6 @@ main p span {
 
 @media only screen and (min-width: 769px) {
   .button-container {
-    bottom: calc(12vh + 2px); /* set button position just above the footer */
+    bottom: calc(8vh + 2px); /* set button position just above the footer */
   }
 }
