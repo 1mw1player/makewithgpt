@@ -1,8 +1,7 @@
-
 * {
   -webkit-tap-highlight-color: transparent;
 
-  
+
 }
 
 
@@ -21,10 +20,12 @@ body {
 
 
 /* Set the font family for headings */
-header,footer {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700; /* bold */
-  
+header,
+footer {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  /* bold */
+
 
 }
 
@@ -33,7 +34,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
-  
+
 }
 
 /* Header Styles */
@@ -63,24 +64,26 @@ footer {
   width: 100%;
   max-width: 100vw;
   background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
-  box-shadow: 0 -0.25rem 0.5rem rgba(0, 0, 0, 0.15); /* changed from positive to negative vertical offset */
+  box-shadow: 0 -0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  /* changed from positive to negative vertical offset */
   -webkit-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
 }
 
 footer p {
   margin: 0;
   font-size: small;
-  
+
 }
 
 /* Main styles */
 main {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   justify-content: left;
   align-items: left;
-  min-height:80vh;
-  box-sizing: border-box; /* include padding in height calculation */
+  min-height: 80vh;
+  box-sizing: border-box;
+  /* include padding in height calculation */
   background: white;
 
 }
@@ -91,7 +94,7 @@ main p {
   font-size: 1.4rem;
   color: rgb(5, 5, 5);
   font-family: 'Playfair Display', serif;
-  text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 
 }
 
@@ -108,8 +111,9 @@ main p span {
   animation-name: fade-in;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  margin-right: 0.5rem; /* add some margin between the words */
-  
+  margin-right: 0.5rem;
+  /* add some margin between the words */
+
 }
 
 
@@ -122,14 +126,15 @@ main p span {
   from {
     opacity: 0;
     transform: translateY(-100%);
-  
+
   }
+
   to {
     opacity: 1;
     transform: translateY(0%);
-    
+
   }
-  }
+}
 
 
 
@@ -148,11 +153,12 @@ main p span {
 
 
 .button-container {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(12vh + 0px); /* set button position just above the footer */
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 1em;
 }
+
 
 
 
@@ -168,7 +174,8 @@ main p span {
   border: none;
   border-radius: 15px;
   box-shadow: 0 9px #494646;
-  margin: 0 50px; /* add some margin between the buttons */
+  margin: 0 50px;
+  /* add some margin between the buttons */
 
 }
 
@@ -186,44 +193,47 @@ main p span {
 
 
 #hoops {
-  margin-left: 17rem;
-  margin-top: -30px; /* move the button up */
-  background-color: orange; /* add this line */
+  margin: 0;
+  /* move the button up */
+  background-color: orange;
+  /* add this line */
   box-shadow: 0 9px #e99856ee;
-  }
+}
 
-  #hoops:hover, #hoops:active {
-    background-color: #ff8c00;
-    box-shadow: 0 10px 20px rgba(248, 91, 0, 0.5);
-  }
-  
+#hoops:hover,
+#hoops:active {
+  background-color: #ff8c00;
+  box-shadow: 0 10px 20px rgba(248, 91, 0, 0.5);
+}
 
-#game{
-  margin-left: 10rem;
-  margin-top: -30px; /* move the button up */
-  background-color: rgb(228, 33, 33); /* add this line */
+
+#game {
+  margin:0 ;
+  /* move the button up */
+  background-color: rgb(228, 33, 33);
+  /* add this line */
   box-shadow: 0 9px #f85e5e;
-  }
+}
 
-  #game:hover, #game:active {
-    background-color: #ff2400;
-    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.5);
-  }
-  
-  
+#game:hover,
+#game:active {
+  background-color: #ff2400;
+  box-shadow: 0 10px 20px rgba(255, 0, 0, 0.5);
+}
 
- #game1{
-    margin-left: 25rem;
-    margin-top: -30px;  
-    background-color: rgb(33, 62, 228);
-    box-shadow: 0 9px #5e68f8;
-    }
-  
-    #game1.hover, #game1:active {
-      background-color: #001aff;
-      box-shadow: 0 10px 20px rgba(53, 10, 211, 0.966);
-    } 
 
+
+#game1 {
+  margin:0;
+  background-color: rgb(33, 62, 228);
+  box-shadow: 0 9px #5e68f8;
+}
+
+#game1.hover,
+#game1:active {
+  background-color: #001aff;
+  box-shadow: 0 10px 20px rgba(53, 10, 211, 0.966);
+}
 
 
 
@@ -240,12 +250,13 @@ main p span {
 
 @media only screen and (max-width: 768px) {
   .button-container {
-    bottom: 10vh ;
+    bottom: 10vh;
   }
 }
 
 @media only screen and (min-width: 769px) {
   .button-container {
-    bottom: calc(8vh + 2px); /* set button position just above the footer */
+    bottom: calc(8vh + 2px);
+    /* set button position just above the footer */
   }
 }
