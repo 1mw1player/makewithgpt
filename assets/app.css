@@ -1,7 +1,7 @@
 
 * {
   -webkit-tap-highlight-color: transparent;
-  overflow: hidden;
+
   
 }
 
@@ -61,7 +61,6 @@ footer {
   background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
   box-shadow: 0 -0.25rem 0.5rem rgba(0, 0, 0, 0.15); /* changed from positive to negative vertical offset */
   -webkit-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
 }
 
 footer p {
