@@ -79,7 +79,7 @@ footer p {
 main {
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: space-between;
   align-items: left;
   min-height: 80vh;
   box-sizing: border-box;
@@ -224,17 +224,6 @@ main p span {
   box-shadow: 0 10px 20px rgba(53, 10, 211, 0.966);
 }
 
-
-
-
-
-.no-wrap {
-  white-space: nowrap;
-}
-
-.responsive-heading {
-  font-size: 2vw;
-}
 
 
 main p .red{
