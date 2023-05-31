@@ -7,6 +7,10 @@
 
 
 
+body {
+  overflow-x: hidden;
+}
+
 
 
 /* Import the font from Google Fonts */
