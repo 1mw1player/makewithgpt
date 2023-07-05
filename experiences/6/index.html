@@ -228,7 +228,7 @@
         var p2s;//The speed CPU moves side to side
         if(ed){er=5;}//If hard, Make er larger so CPU hits it diagonally.
 
-   
+            //If the ball is going down, and is close to the CPU, move towards it.
 
           if((Math.abs(xspeed)+Math.abs(yspeed))<10&&ball.y<=canvas.height/2){
               if(ball.y-20>cMallet.y){

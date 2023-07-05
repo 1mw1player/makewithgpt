@@ -1,114 +1,148 @@
-// Part 1: Creating the canvas and context
+var canvas = document.getElementById('canvas');
+ctx = canvas.getContext('2d');
+var gm = true;
+var ball_speed = 10;
+var xspeed = 0;
+var yspeed = 0;
+var com_score = 0;
+var player_score = 0;
+var x_min=30;
+var x_max=460;
+var y_min=30;
+var y_max=600;
 
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
+function draw_rect(x,y,w,h,b)
+{
+    ctx.beginPath();
+    if(b)
+    {
+        ctx.strokeStyle = "#151B54";
+        ctx.lineWidth = 40;
+    }
+    else
+    {
+        ctx.strokeStyle = "#1589FF";
+        ctx.lineWidth = 4;
+    }    
+    ctx.strokeRect(x,y,w,h);
+    ctx.closePath();
+}  
+  
+function draw_goal(x,y,r,s)
+{
+    ctx.beginPath();
+    ctx.lineWidth=4;
+    if(s)
+      ctx.arc(x, y, r, 0, Math.PI, false);
+    else
+      ctx.arc(x, y, r, Math.PI, 0, false);
 
-// Part 2: Creating the paddles
-
-let paddle1X = 20;
-let paddle1Y = canvas.height / 2;
-let paddle2X = canvas.width - 20;
-let paddle2Y = canvas.height / 2;
-const paddleRadius = 30;
-
-// Part 3: Creating the ball
-
-let ballX = canvas.width / 2;
-let ballY = canvas.height / 2;
-let ballRadius = 10;
-let ballSpeed = 5;
-let ballVelocityX = Math.random() < 0.5 ? -ballSpeed : ballSpeed;
-let ballVelocityY = Math.random() < 0.5 ? -ballSpeed : ballSpeed;
-
-// Part 4: Drawing the game objects
-
-function draw() {
-// Clear the canvas
-context.clearRect(0, 0, canvas.width, canvas.height);
-
-// Draw the paddles
-context.beginPath();
-context.arc(paddle1X, paddle1Y, paddleRadius, 0, Math.PI * 2);
-context.fillStyle = "blue";
-context.fill();
-context.closePath();
-
-context.beginPath();
-context.arc(paddle2X, paddle2Y, paddleRadius, 0, Math.PI * 2);
-context.fillStyle = "red";
-context.fill();
-context.closePath();
-
-// Draw the ball
-context.beginPath();
-context.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-context.fillStyle = "black";
-context.fill();
-context.closePath();
+    ctx.strokeStyle = "#1589FF";
+    ctx.stroke();
+    ctx.closePath();
 }
 
-// Part 5: Moving the paddles with the mouse
-
-canvas.addEventListener("mousemove", (event) => {
-paddle1Y = event.clientY;
-});
-
-// Part 6: Moving the ball and detecting collisions
-
-function moveBall() {
-ballX += ballVelocityX;
-ballY += ballVelocityY;
-
-// Detect collision with the left paddle
-if (
-ballX - ballRadius <= paddle1X + paddleRadius &&
-ballY >= paddle1Y - paddleRadius &&
-ballY <= paddle1Y + paddleRadius
-) {
-ballVelocityX = -ballVelocityX;
-ballVelocityY = (ballY - paddle1Y) * 0.2;
+function draw_circle(x,y,r,w)
+{
+    ctx.beginPath();
+    ctx.lineWidth=w;
+    ctx.arc(x, y, r, 0, Math.PI*2, false);
+    ctx.strokeStyle = "#1589FF";
+    ctx.stroke();
+    ctx.closePath();
 }
 
-// Detect collision with the right paddle
-if (
-ballX + ballRadius >= paddle2X - paddleRadius &&
-ballY >= paddle2Y - paddleRadius &&
-ballY <= paddle2Y + paddleRadius
-) {
-ballVelocityX = -ballVelocityX;
-ballVelocityY = (ballY - paddle2Y) * 0.2;
+function draw_filled_circle(x,y,r,d)
+{
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI*2);
+    if(d==1)
+    {
+     ctx.fillStyle = "#F87217";
+     ctx.strokeStyle = "#9F000F";
+    }
+    else if(d==2)
+    {
+     ctx.fillStyle = "#ffdc00";
+     ctx.strokeStyle = "#9F000F";
+    }
+    else
+    {
+     ctx.fillStyle = "#7D0552";
+     ctx.strokeStyle = "#4CC417";   
+    }    
+    
+    ctx.fill();
+    ctx.lineWidth = 3;
+    
+    ctx.stroke();
+    ctx.closePath();
 }
 
-// Detect collision with the top wall
-if (ballY - ballRadius <= 0) {
-ballVelocityY = -ballVelocityY;
+function draw_board()
+{
+    draw_rect(0,0,520,660,1);
+    draw_rect(30,30,460,600,0);
+    draw_goal(260,30,70,1);
+    draw_goal(260,30,150,1);
+    draw_goal(260,630,70,0);
+    draw_goal(260,630,150,0);
+    draw_circle(260,330,40,4);
+    draw_circle(260,330,5,4);
+    
+    ctx.beginPath();
+    ctx.moveTo(30, 330);
+    ctx.lineTo(490, 330);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(190, 30);
+    ctx.lineTo(330, 30);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = "#000";
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.moveTo(190, 630);
+    ctx.lineTo(330, 630);
+    //ctx.strokeStyle("#FFFFFF");
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.font = "50px Pristina";
+    ctx.lineWidth = 2
+    ctx.strokeText(com_score,440,300);
+    ctx.strokeText(player_score,440,380);
 }
 
-// Detect collision with the bottom wall
-if (ballY + ballRadius >= canvas.height) {
-ballVelocityY = -ballVelocityY;
-}
-}
-
-// Part 7: Animating the game
-
-function animate() {
-// Move the ball
-moveBall();
-
-// Draw the game objects
-draw();
-
-// Request the next frame
-requestAnimationFrame(animate);
+function distance(x1,y1,x2,y2)
+{
+    var tempx = x2-x1;
+    var tempy = y2-y1;
+    tempx*=tempx;
+    tempy*=tempy;
+    return Math.sqrt(tempx+tempy);
 }
 
-// Initialize the game
-function init() {
-canvas.width = 800;
-canvas.height = 600;
+var Mallet = function(x,y,r)
+{
 
-animate();
+    this.x = x;
+    this.y = y;
+    this.radius = r;
 }
+// Player's object
+var pMallet = new Mallet(260,canvas.height-100,30);
 
-init();
+var cMallet = new Mallet(260,100,30);
+
+// Ball class
+var Ball = function (x,y,r) {
+    this.x = x;
+    this.y = y;
+    this.radius = r;
+}
+// ball object
+var ball = new Ball(canvas.width/2,canvas.height-200,15); 
