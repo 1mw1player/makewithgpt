@@ -51,6 +51,16 @@ for (let i = 0; i < 3; i++) {
   pipes.push(new Pipe(canvas.width/4 + i * (canvas.width / 4), Math.floor(Math.random() * (canvas.height - this.gapHeight - 100)) + 100));
 }
 
+canvas.addEventListener('mousedown', event => {
+  if (!isGameOver) {
+    // If the game is not over, make the bird jump
+    birdVelocity = jumpVelocity;
+  } else {
+    // If the game is over, reload the page to restart the game
+    location.reload();
+  }
+  event.preventDefault();
+}, false);
 
 // Handle player input and game restart
 canvas.addEventListener('touchstart', event => {
