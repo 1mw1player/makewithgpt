@@ -1,63 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<title>MakeWithGPT</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="assets/app.css">
+  </head>
 
-    <link rel="stylesheet" href="copilot.css">
-
-
-</head>
-
-<body>
-
-   
-    <h2>Copilot has taken control</h2>
-
-    <canvas id="canvas" style="background-color:black"></canvas>
-
-    
-
-    <script>
-        var img = new Image();
-        img.src = 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png';
-        img.onload = function () {
-            drawStuff();
-        }; 
-    </script>
-
-    <script>
-        function drawStuff() {
-            var canvas = document.getElementById("canvas");
-            var ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-
-        }
-    </script>
-
-    <script>
-        window.addEventListener('resize', resizeCanvas, false);
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            drawStuff();
-        }
-        resizeCanvas();
-    </script>
-
-    <script>
-        var canvas = document.getElementById("canvas");
-        canvas.addEventListener("click", function (e) {
-            window.location.href = "index7.html";
-        });
-    </script>
-
- 
+  <body>
+	<header>
+	  <p>MakeWithGPT</p>
+	</header>
+  
+	<main>
+	  <div id="main-content"></div>
+	  
+	  <p>MakeWithGPT is brought to you by passionate ChatGPT enthusiasts and developers! Engage with the enigmatic <span class="black">black</span> button to dive headfirst into the captivating world of creative coding, enhanced by the power of ChatGPT. Remember, it might not always function flawlessly, but that's part of the charm!.</p>
 
 
+		
+	  <p>Buckle up and let's explore together! OR you can click the <span class="orange"> Orange</span> buttons for some hoops</p>
 
-</body>
+	  <p>OR grab another human and challenge him to a game by pressing the <span class="blue">blue</span> button</p>
+	
 
-</html>
+	  <p>Or if you are really daring try the <span class="red">Red</span> button</p>
+
+	  
+	  <div class="button-container">
+		<button class="button responsive-heading" onclick="window.location.href='experiences/2/index.html'"  ></button>
+		<button id="hoops" class="button responsive-heading" onclick="window.location.href='experiences/5/index.html'"></button>
+		<button id ="game" class="button responsive-heading" onclick="window.location.href='/index3.html'"  ></button>
+		<button id ="game1" class="button responsive-heading" onclick="window.location.href='/experiences/6/index2.html'"  ></button>
+	  </div>
+	</main>
+  
+	<footer>
+	  <p>Copyright © 2023 MakeWithGPT.</p>
+	</footer>
+  
+	
+	<script src="assets/animation.js"></script>
+  </body>
+  
+  
