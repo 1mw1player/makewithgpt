@@ -40,7 +40,7 @@ body {
 /* Header Styles */
 header {
   background-color: #000000;
-  background: linear-gradient(to right, #000000, #ff4d4d, #ffaf42);
+  background:black;
   color: #ffffff;
   height: 10vh;
   display: flex;
