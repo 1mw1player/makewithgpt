@@ -1,6 +1,6 @@
 * {
   -webkit-tap-highlight-color: transparent;
-
+  overflow: hidden;
 
 }
 
@@ -91,14 +91,14 @@ main {
 
 main p {
   text-align: left;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: inherit; /* Add this line */
   font-family: 'Playfair Display', serif;
   text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1800px) {
   main p {
     font-size: 1.2rem;
   }
