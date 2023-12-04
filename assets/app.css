@@ -154,7 +154,7 @@ main p span {
 .button {
   display: block;
   padding: 15px 25px;
-  font-size: 10px;
+  font-size: 16x;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -207,6 +207,7 @@ main p span {
 #game:hover,
 #game:active {
   background-color: #ff2400;
+  -webkit-box-shadow: 0 10px 20px rgba(53, 10, 211, 0.966); /* Added -webkit- prefix */
   box-shadow: 0 10px 20px rgba(255, 0, 0, 0.5);
 }
 
@@ -218,7 +219,7 @@ main p span {
   box-shadow: 0 9px #5e68f8;
 }
 
-#game1.hover,
+#game1:hover,
 #game1:active {
   background-color: #001aff;
   box-shadow: 0 10px 20px rgba(53, 10, 211, 0.966);
