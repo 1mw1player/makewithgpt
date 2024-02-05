@@ -1,0 +1,7 @@
+.background-image {
+  width: 50%; /* Covers 50% of the viewport width */
+  height: 100vh; /* Full viewport height, adjust as needed */
+  background-image: url('assets/images/chapter_1.png');
+  background-size: cover; /* Cover the container fully while maintaining aspect ratio */
+  background-position: center; /* Center the background image */
+}
