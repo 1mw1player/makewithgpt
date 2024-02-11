@@ -1,61 +1,37 @@
+/* Add this to your existing style.css file */
 body, html {
     margin: 0;
     padding: 0;
-    width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: Arial, sans-serif;
 }
-
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
+.bg-image {
+    background-image: url('assets/images/background.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
     height: 100vh;
-}
-
-.text-side {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0;
-    padding: 20px;
-    box-sizing: border-box;
-    order: 1; /* Added to ensure text side is on the left */
-}
-
-.text-side p {
-    font-size: 24px;
-    color: #333;
     text-align: center;
+    color: white;
+}
+.logo {
+    max-width: 300px;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    padding: 10px; /* Add some padding around the logo */
+    border-radius: 10px; /* Optional: rounds the corners */
 }
 
-.image-side {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+h1, p {
+    color: #EFEFEF; /* Lighter text color for better contrast against a dark background */
 }
 
-.image-side img {
-    max-width: 100%;
-    height: auto;
-}
-
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-
-    .image-side, .text-side {
-        width: 100%;
-    }
-
-    .text-side p {
-        font-size: 20px;
-    }
+/* Ensures text is legible against the background */
+.text-side, .image-side {
+    background-color: rgba(0, 0, 0, 0.5); /* Adds semi-transparent background */
+    padding: 20px;
+    border-radius: 5px;
 }
