@@ -5,9 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to MakeWithGPT</title>
     <link rel="stylesheet" href="assets/css/style.css">
+  
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo');
+            const radialEffect = document.querySelector('.radial-blue-effect');
 
+            logo.addEventListener('mouseover', function() {
+                radialEffect.classList.add('animate');
+            });
+
+            logo.addEventListener('mouseout', function() {
+                radialEffect.classList.remove('animate');
+            });
+        });
+    </script>
     <div class="radial-blue-effect"></div> <!-- This is now positioned absolutely and will act as a background -->
     <div class="logo-container">
         <img src="assets/images/logo.png" alt="MakeWithGPT Logo" class="logo">
