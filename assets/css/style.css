@@ -6,9 +6,8 @@ body, html {
     font-family: Arial, sans-serif;
 }
 .bg-image {
-    background-image: url('assets/images/background.png');
-    background-size: cover;
-    background-position: center;
+    /* The properties here are already set inline in your HTML, 
+       so you can actually remove them from here to avoid redundancy */
     position: relative;
     height: 100vh;
     display: flex;
@@ -17,21 +16,27 @@ body, html {
     text-align: center;
     color: white;
 }
+
+.logo-container {
+    position: relative; /* Establishes a positioning context for absolute positioned elements inside */
+}
+
 .logo {
     max-width: 300px;
-    margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-    padding: 10px; /* Add some padding around the logo */
-    border-radius: 10px; /* Optional: rounds the corners */
+    transition: transform 0.5s ease;
+    /* rest of your styles */
 }
 
-h1, p {
-    color: #EFEFEF; /* Lighter text color for better contrast against a dark background */
+.logo:hover {
+    transform: rotate(90deg);
 }
 
-/* Ensures text is legible against the background */
-.text-side, .image-side {
-    background-color: rgba(0, 0, 0, 0.5); /* Adds semi-transparent background */
-    padding: 20px;
-    border-radius: 5px;
+.logo-text {
+    position: absolute;
+    top: 50%; /* Center the text vertically */
+    left: 50%; /* Center the text horizontally */
+    transform: translate(-80%, -80%); /* Adjust the position to truly center it */
+    /* Add additional styling for your text here */
+    color: black;
+    font-size:30px;
 }
