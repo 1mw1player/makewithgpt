@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to MakeWithGPT</title>
     <link rel="stylesheet" href="assets/css/style.css">
-  
+    <script src="assets/js/animate.js" defer></script>
 </head>
 <body>
-    <div class="radial-blue-effect"></div> <!-- This is now positioned absolutely and will act as a background -->
-    <div class="logo-container">
-        <img src="assets/images/logo.png" alt="MakeWithGPT Logo" class="logo">
-        <div class="logo-text">Make<span style="color: #1e84d8;">With</span>Gpt</div>
+    <div class="svg-container">
+        <svg viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <rect x="90" y="25" width="20" height="50" class="spine"/>
+            <rect x="110" y="25" width="40" height="50" class="cover" style="transform-origin: 110px 50px;"/>
+            <a xlink:href="stories/storytime.html" target="_blank">
+                <text x="50%" y="50%" class="text" text-anchor="middle" transform="translate(0, 4)">Story Time</text>
+            </a>
+        </svg>
+        
     </div>
-    <script src="assets/js/animate.js"></script>
 </body>
 </html>
