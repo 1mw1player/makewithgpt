@@ -1,0 +1,14 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Optional: in case you want a different background color */
+}
+
+video {
+    /* Remove the width and height from here if you want to keep it in the HTML */
+    width: 720px; /* Optional: adjust if you want a different size */
+    height: 400px; /* Optional: adjust if you want a different size */
+}
