@@ -17,6 +17,14 @@ body, html {
 .text { fill: rgb(29, 5, 5); font-size: 12px; opacity: 0; /* Ensure text is initially invisible */}
 .animateCover { animation: openBook 2s forwards; }
 .animateText { animation: fadeInText 2s forwards; animation-delay: 2s; }
+.pageLine {
+    
+    stroke: black;
+    stroke-width: 1;
+    opacity: 1; /* Keep lines initially invisible without starting the animation */
+}
+
+
 
 @keyframes openBook {
     from { transform: rotate(0); }
@@ -24,6 +32,11 @@ body, html {
 }
 
 @keyframes fadeInText {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInLines {
     from { opacity: 0; }
     to { opacity: 1; }
 }
