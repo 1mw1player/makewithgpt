@@ -4,7 +4,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000; /* Optional: in case you want a different background color */
+    background-color: #ffffff; /* Optional: in case you want a different background color */
 }
 
 video {
