@@ -9,6 +9,6 @@ body, html {
 
 video {
     /* Remove the width and height from here if you want to keep it in the HTML */
-    width: 1000px; /* Optional: adjust if you want a different size */
-    height: 1000px; /* Optional: adjust if you want a different size */
+    width: 720px; /* Optional: adjust if you want a different size */
+    height: 400px; /* Optional: adjust if you want a different size */
 }
