@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
+    border: 1px solid black;
+    display: block;
+    margin: auto;
+    height: 100%;
+
+overflow: hidden;
+
+
+}
+
+html,body{
+    overscroll-behavior:none;
+}
