@@ -18,6 +18,8 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+    touch-action: none;
+  
 }
 
 /* Header Styles */
