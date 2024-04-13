@@ -84,7 +84,7 @@ main {
   flex-direction: column;
   justify-content: space-between;
   align-items: left;
-  min-height: 80vh;
+  min-height: 70vh;
   box-sizing: border-box;
   /* include padding in height calculation */
   background: white;
