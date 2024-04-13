@@ -64,6 +64,7 @@ footer p {
   width: 100%;
   padding: 1em;
   transform: translateY(70vh); /* Adjust the value as needed */
+  z-index: 9999; /* Ensure the buttons are above other elements */
 }
 
 .button {
