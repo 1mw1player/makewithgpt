@@ -85,6 +85,10 @@ main {
   box-sizing: border-box;
   /* include padding in height calculation */
   background: white;
+  -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
 
 }
 
