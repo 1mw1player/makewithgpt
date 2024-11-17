@@ -39,13 +39,19 @@
     </footer>    
 
     <script>
-        window.addEventListener('load', () => {
-            // Check if the viewport width is small (mobile screen)
+        function scrollToBottomOnMobile() {
             if (window.innerWidth <= 768) {
-                // Scroll to the bottom of the page
-                window.scrollTo(0, document.body.scrollHeight);
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: document.body.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }, 100); // Adjust delay as needed
             }
-        });
+        }
+
+        window.addEventListener('load', scrollToBottomOnMobile);
+        window.addEventListener('resize', scrollToBottomOnMobile); // Handle dynamic viewport changes
     </script>
 </body>
 </html>
