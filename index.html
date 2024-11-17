@@ -8,6 +8,7 @@
     <!-- Add defer to load script after HTML parsing -->
     <script type="text/javascript" src="script.js" defer></script>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="nav-container">
@@ -38,5 +39,17 @@
     </footer>    
    
     </main>
+    <script>
+        window.addEventListener('load', () => {
+            // Check if the viewport width is small (mobile screen)
+            if (window.innerWidth <= 768) {
+                // Scroll to the bottom of the page
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        });
+    </script>
+    
+    
 </body>
+
 </html>
