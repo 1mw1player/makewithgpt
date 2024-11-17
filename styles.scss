@@ -40,6 +40,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
+  outline: none; 
 }
 
 // Navbar styles
@@ -65,7 +67,6 @@ body {
 
 .logo {
   font-size: 1.5rem;
-  font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: $border-radius;
   transition: all 0.3s ease;
@@ -189,7 +190,12 @@ body {
   background: $background; 
   -webkit-appearance: none;  // For Safari
   -moz-appearance: none;     // For Firefox
-  appearance: none;          // Standard
+  appearance: none; 
+  outline: none;         // Standard
+  -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
+  outline: none; /* Removes focus outline */
+  
+  
   // ... rest of the existing properties
   &:focus {
     outline: none;

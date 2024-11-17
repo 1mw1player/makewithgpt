@@ -11,6 +11,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
+  outline: none;
 }
 
 .navbar {
@@ -36,7 +38,6 @@ body {
 
 .logo {
   font-size: 1.5rem;
-  font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: 10px;
   transition: all 0.3s ease;
@@ -165,6 +166,9 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
+  outline: none; /* Removes focus outline */
 }
 .footer-button:focus {
   outline: none;
