@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="styles2s.css">
+    <!-- You'll need to add your CSS file here -->
+</head>
+<body>
+    <!-- Container -->
+    <div class="container">
+        <!-- Player -->
+        <div class="player">
+            <div class="contentWrapper">
+                <!-- Music Switch -->
+                <div class="musicSwitch">
+                    <div id="prev" class="button _prev"></div>
+                    <div id="next" class="button _next"></div>
+                </div>
+                <!-- Album -->
+                <div id="jsAlbum">
+                    <div class="album _play">
+                        <div class="album__internal"></div>
+                    </div>
+                </div>
+                <!-- Music Info -->
+                <div class="musicInfo">
+                    <h1 class="musicInfo__name">Put On Your Sunday</h1>
+                    <h2 class="musicInfo__author">Jerry Herman</h2>
+                </div>
+                <!-- Music Time -->
+                <div class="musicTime">
+                    <p class="musicTime__current">00:00</p>
+                    <p class="musicTime__last">05:01</p>
+                </div>
+                <!-- Music Bar -->
+                <div id="progress" class="musicBar">
+                    <div id="length" class="musicBar__length">
+                        <div class="button musicBar__circle">
+                            <div class="musicBar__circlePoint"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Music Order -->
+                <div class="musicOrder">
+                    <div id="loop" class="musicOrder__loop _loop"></div>
+                    <div id="shuffle" class="musicOrder__shuffle"></div>
+                </div>
+                <!-- Music Control -->
+                <div class="musicControl">
+                    <div id="backward" class="button musicControl__backward"></div>
+                    <div id="play" class="button musicControl__play _play"></div>
+                    <div id="forward" class="button musicControl__forward"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Social links -->
+    <div class="social">
+        <ul class="socialList">
+            <li class="socialList__item">
+                <a class="socialList__link" href="https://github.com/Kerthin?tab=overview&from=2021-05-01&to=2021-05-05" target="_blank">
+                    <svg class="socialList__icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="socialList__item">
+                <a class="socialList__link" href="https://codepen.io/Astap" target="_blank">
+                    <svg class="socialList__icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon>
+                        <line x1="12" y1="22" x2="12" y2="15.5"></line>
+                        <polyline points="22 8.5 12 15.5 2 8.5"></polyline>
+                        <polyline points="2 15.5 12 8.5 22 15.5"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="8.5"></line>
+                    </svg>
+                </a>
+            </li>
+            <li class="socialList__item">
+                <a class="socialList__link" href="https://twitter.com/BelichenkoRoden" target="_blank">
+                    <svg class="socialList__icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Your JavaScript code goes here
+        (function IIFE() {
+            const list = [
+                {
+                    id: 1,
+                    class: 'jerryHerman',
+                    url: "https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/music/JerryHerman_PutOnYourSundayClothes.mp3",
+                    author: "Jerry Herman",
+                    title: "Put On Your Sunday"
+                },
+                // ... rest of the list array ...
+            ];
+
+            // Rest of your JavaScript code
+            let currentId = 0;
+            let isPlaying = false;
+            let isLoop = true;
+            let loopOne = false;
+            let isShuffle = false;
+            let currentAudio = "music1";
+            let timer = null;
+
+            // ... rest of your JavaScript code ...
+        })();
+    </script>
+</body>
+</html>

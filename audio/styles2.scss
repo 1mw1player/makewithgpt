@@ -1,0 +1,1006 @@
+/*____________________________________________________________
+
+# Variables
+# Auxiliary styles
+# Container
+	## Player
+		### Music Switch
+		### Album
+		### Music Info
+		### Music Time
+		### Music Bar
+		### Music Order
+		### Music Control
+# @media
+	## @media 433px
+	## @media 414px
+	## @media 375px
+	## @media 320px
+	## @media Height 850px
+	## @media Height 690px
+	## @media Height 530px
+	## @media Height 360px
+	## @media Height 300px
+	## @media Height 230px
+
+____________________________________________________________*/
+
+/*____________________________________________________________
+# Variables
+____________________________________________________________*/
+$palettePrimary: #f5f6e7;
+$paletteTitleColor: #424234;
+$paletteTextColor:  #a3a496;
+$paletteMusicBar:  #efefef;
+$paletteControlButtons:  #749064;
+
+$paletteLightShadow: #fff;
+$paletteDarkShadow: #ccc;
+
+/*____________________________________________________________
+# Auxiliary styles
+____________________________________________________________*/
+* {
+	padding: 0;
+	margin: 0;
+	outline: none;
+	box-sizing: border-box;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+::-webkit-scrollbar {
+	width: 0;
+}
+
+/*____________________________________________________________
+# Container
+____________________________________________________________*/
+.container {
+	width: 100%;
+	height: 100vh;
+	background-color: $palettePrimary;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/bg/bg.png');
+}
+
+/*____________________________________________________________
+## Player
+____________________________________________________________*/
+.player {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 433px;
+	height: 814px;
+	transform: translate(-50%, -50%);
+	border-radius: 50px;
+	background-color: $palettePrimary;
+	box-shadow: -3px -3px 9px 0.1px $paletteLightShadow, 3px 3px 9px 0.1px $paletteDarkShadow;
+	overflow: hidden;
+}
+.contentWrapper {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 365px;
+	height: 708px;
+	transform: translate(-50%, -50%);
+}
+
+/*____________________________________________________________
+### Music Switch
+____________________________________________________________*/
+.musicSwitch {
+	position: absolute;
+	left: 50%;
+	height: 44px;
+	width: 340px;
+	transform: translateX(-50%);
+
+	._prev,
+	._next {
+		width: 44px;
+		height: 44px;
+	}
+	._prev {
+		float: left;
+
+		&:before {
+			background-position: 8px center;
+			background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/prev.png');
+		}
+	}
+	._next {
+		float: right;
+
+		&:before {
+			background-position: 10px center;
+			background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/next.png');
+		}
+	}
+}
+
+.button {
+	background: $palettePrimary;
+	border-radius: 50%;
+	box-shadow: -3px -3px 9px 0.1px $paletteLightShadow, 3px 3px 9px 0.1px $paletteDarkShadow;
+	position: relative;
+	cursor: pointer;
+
+	&:before {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		content: "";
+		background-color: $palettePrimary;
+		width: 85%;
+		height: 85%;
+		display: inline-block;
+		border-radius: 50%;
+		box-shadow: -1px -1px 2px 0.1px #fff, 5px 5px 10px 0.1px #ccc;
+		background-size: 50%;
+		background-repeat: no-repeat;
+	}
+
+	&:active:before {
+		background-size: 49%;
+		box-shadow: inset -3px -3px 5px 0.1px #fff, inset 3px 3px 5px 0.7px #ccc;
+	}
+}
+
+/*____________________________________________________________
+### Album
+____________________________________________________________*/
+@mixin albumBgMix($albumBgName, $bgPath) {
+	.#{$albumBgName} {
+		.album:before {
+			background-image: url(#{$bgPath});
+		}
+	}
+}
+
+@include albumBgMix('jerryHerman', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/jerryHerman.jpg');
+@include albumBgMix('elvisPresley', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/elvisPresley.jpg');
+@include albumBgMix('royOrbison', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/royOrbison.jpg');
+@include albumBgMix('frankSinatra', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/frankSinatra.jpg');
+@include albumBgMix('jimCroce', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/jimCroce.jpg');
+@include albumBgMix('redHotChiliPeppers', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/redHotChiliPeppers.jpg');
+@include albumBgMix('stephaneGrappelli', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/stephaneGrappelli.jpg');
+@include albumBgMix('evanKing', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/evanKing.jpg');
+@include albumBgMix('JR', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/JR.jpg');
+@include albumBgMix('theDeli', 'https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/theDeli.png');
+
+.album {
+	position: absolute;
+	top: 86px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: inline-block;
+	width: 300px;
+	height: 300px;
+	border-radius: 100%;
+	text-align: center;
+	box-shadow: 15px 15px 30px -10px rgba(0,0,0,0.15),
+				-20px -20px 20px -10px rgba(255,255,255,1),
+				-0.5px -0.5px 0 rgba(255,255,255,1),
+				0.5px 0.5px 0 rgba(0,0,0,0.02);
+	z-index: 5;
+	background-color: $palettePrimary;
+
+	&._pause {
+		&:before {
+			animation: rotateAlbum 15s linear infinite;
+		}
+	}
+
+	&:before {
+		position: absolute;
+		content: '';
+		display: block;
+		width: 85%;
+		height: 85%;
+		border-radius: inherit;
+		left: 50%;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.3),
+		            inset -4px -4px 6px -1px rgba(0,0,0,0.3);
+		background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/albumBg/jerryHerman.jpg');
+		background-size: cover;
+		background-color: transparent;
+		animation: rotateAlbum 15s linear infinite paused;
+	}
+	&:after {
+		position: absolute;
+		content: '';
+		display: block;
+		width: 70%;
+		height: 70%;
+		border-radius: inherit;
+		left: 50%;
+		top: 50%;
+		background-color: rgba(0,0,0,0.025);
+		border: 1px solid rgba(0,0,0,0.01);
+		transform: translateX(-50%) translateY(-50%);
+		box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.3),
+		            inset -4px -4px 6px -1px rgba(0,0,0,0.3);
+	}
+
+	&__internal {
+		position: relative;
+		margin-top: 45px;
+		display: inline-block;
+		width: 210px;
+		height: 210px;
+		border-radius: 100%;
+		text-align: center;
+
+		&:before {
+			position: absolute;
+			content: '';
+			display: block;
+			width: 80%;
+			height: 80%;
+			border-radius: inherit;
+			left: 50%;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.3),
+			            inset -4px -4px 6px -1px rgba(0,0,0,0.3);
+		}
+	}
+}
+
+@keyframes rotateAlbum {
+	0% {
+		transform: translateX(-50%) translateY(-50%) rotate(0deg);
+	}
+	100% {
+		transform: translateX(-50%) translateY(-50%) rotate(-360deg);
+	}
+}
+
+/*____________________________________________________________
+### Music Info
+____________________________________________________________*/
+.musicInfo {
+	position: absolute;
+	top: 451px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 185px;
+	height: 58px;
+
+	&__name {
+		font-family: sans-serif;
+		font-size: 30px;
+		text-align: center;
+		font-weight: 500;
+		margin-bottom: 8px;
+		color: $paletteTitleColor;
+	}
+	&__author {
+		font-family: sans-serif;
+		font-size: 15px;
+		text-align: center;
+		font-weight: 100;
+		color: $paletteTextColor;
+	}
+}
+
+/*____________________________________________________________
+### Music Time
+____________________________________________________________*/
+.musicTime {
+	position: absolute;
+	top: 544px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 340px;
+	height: 15px;
+
+	&__current,
+	&__last {
+		font-family: sans-serif;
+		font-size: 15px;
+		text-align: center;
+		font-weight: 100;
+		color: $paletteTextColor;
+	}
+	&__current {
+		float: left;
+	}
+	&__last {
+		float: right;
+	}
+}
+
+/*____________________________________________________________
+### Music Bar
+____________________________________________________________*/
+.musicBar {
+	position: absolute;
+	top: 572px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 340px;
+	height: 7px;
+	border-radius: 5px;
+	background-color: $paletteMusicBar;
+	cursor: pointer;
+
+	&__length {
+		display: block;
+		width: 0%;
+		background-color: $paletteControlButtons;
+		height: 100%;
+		border-radius: 5px;
+		transition: width linear 200ms;
+	}
+	&__circle {
+		margin-top: -10px;
+		margin-right: -13px;
+		width: 27px;
+		height: 27px;
+		display: block;
+		float: right;
+		border-radius: 50%;
+	}
+	&__circlePoint {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 11px;
+		height: 11px;
+		border-radius: 50%;
+		background-color: $paletteControlButtons;
+	}
+}
+
+/*____________________________________________________________
+### Music Order
+____________________________________________________________*/
+.musicOrder {
+	position: absolute;
+	bottom: 22.5px;
+	width: 100%;
+	height: 22px;
+
+	&__loop,
+	&__shuffle {
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		cursor: pointer;
+	}
+	&__loop {
+		float: left;
+	}
+	&__shuffle {
+		float: right;
+	}
+	&__loop {
+		width: 28.5px;
+		height: 100%;
+		background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/loop.png');
+	}
+	&__loop {
+		&._repeat {
+			background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/repeat.png');
+		}
+	}
+	&__loop {
+		&._off {
+			opacity: .5;
+		}
+	}
+	&__shuffle {
+		width: 28.5px;
+		height: 100%;
+		background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/shuffle.png');
+		opacity: .5;
+	}
+	&__shuffle {
+		&._shuffle {
+			opacity: 1;
+		}
+	}
+}
+
+/*____________________________________________________________
+### Music Control
+____________________________________________________________*/
+.musicControl {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 255px;
+	height: 67px;
+
+	&__play {
+		background-color: $paletteControlButtons;
+		box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.2),
+					-6px -6px 10px -1px rgba(255,255,255,0.05);
+
+		&._pause,
+		&._play {
+			&:before {
+				background-repeat: no-repeat;
+				background-size: 35%;
+			}
+		}
+
+		&._pause {
+			&:before {
+				background-position: 18px center;
+				background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/pause.png');
+			}
+		}
+		&._play {
+			&:before {
+				background-position: 20px center;
+				background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/play.png');
+			}
+			&:active:before {
+				background-size: 34%;
+			}
+		}
+
+		&:before {
+			background-color: $paletteControlButtons;
+			box-shadow: -1px -1px 2px 0.1px rgba(0,0,0,0.2), 5px 5px 10px 0.1px rgba(0,0,0,0.2);
+		}
+		&:active:before {
+			box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+						inset -4px -4px 6px -1px rgba(255,255,255,0.2);
+		}
+	}
+
+	&__backward,
+	&__play,
+	&__forward {
+		display: block;
+		float: left;
+	}
+	&__backward,
+	&__play {
+		margin-right: 27px;
+	}
+	&__backward,
+	&__play,
+	&__forward {
+		width: 67px;
+		height: 67px;
+	}
+
+	&__backward {
+		&:before {
+			background-position: 12px center;
+			background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/backward.png');
+		}
+	}
+	&__forward {
+		&:before {
+			background-position: 16px center ;
+			background-image: url('https://rawcdn.githack.com/Kerthin/musicPlayer-templateSait/4df6444e97123a39d036f1f9b57973858f70bae5/docs/image/icon/forward.png');
+		}
+	}
+}
+
+/*____________________________________________________________
+# @media
+____________________________________________________________*/
+/*____________________________________________________________
+## @media 433px
+____________________________________________________________*/
+@media screen and (max-width: 433px) {
+	.player {
+		width: 414px;
+		height: 736px;
+	}
+	.contentWrapper {
+		width: 350px;
+		height: 677px;
+	}
+	.musicSwitch {
+		height: 42px;
+		width: 325px;
+
+		._prev,
+		._next {
+			width: 42px;
+			height: 42px;
+		}
+		._prev {
+			&:before {
+				background-position: 7px center;
+			}
+		}
+		._next {
+			&:before {
+				background-position: 9px center;
+			}
+		}
+	}
+	.album {
+		top: 82px;
+		width: 287px;
+		height: 287px;
+
+		&__internal {
+			margin-top: 43px;
+			width: 201px;
+			height: 201px;
+		}
+	}
+	.musicInfo {
+		top: 431px;
+		width: 177px;
+		height: 55px;
+
+		&__name {
+			font-size: 28px;
+			margin-bottom: 7px;
+		}
+		&__author {
+			font-size: 14px;
+		}
+	}
+	.musicTime {
+		top: 520px;
+		width: 325px;
+		height: 14px;
+
+		&__current,
+		&__last {
+			font-size: 14px;
+		}
+	}
+	.musicBar {
+		top: 547px;
+		width: 325px;
+		height: 7px;
+
+		&__length {
+			transition: width linear 175ms;
+		}
+		&__circle {
+			margin-top: -9.5px;
+			margin-right: -12px;
+			width: 26px;
+			height: 26px;
+		}
+		&__circlePoint {
+			width: 10.5px;
+			height: 10.5px;
+		}
+	}
+	.musicOrder {
+		bottom: 21.5px;
+		height: 21px;
+
+		&__loop,
+		&__shuffle {
+			width: 27px;
+		}
+	}
+	.musicControl {
+		width: 244px;
+		height: 64px;
+
+		&__play {
+			&._pause {
+				&:before {
+					background-position: 17px center;
+				}
+			}
+		}
+		&__play {
+			&._play {
+				&:before {
+					background-position: 19px center;
+				}
+			}
+		}
+		&__backward,
+		&__play {
+			margin-right: 26px;
+		}
+		&__backward,
+		&__play,
+		&__forward {
+			width: 64px;
+			height: 64px;
+		}
+		&__backward {
+			&:before {
+				background-position: 11px center;
+			}
+		}
+		&__forward {
+			&:before {
+				background-position: 15px center;
+			}
+		}
+	}
+	
+	.social {
+		display: none;
+	}
+}
+
+/*____________________________________________________________
+## @media 414px
+____________________________________________________________*/
+@media screen and (max-width: 414px) {
+	.container {
+		background-image: none;
+	}
+	.player {
+		border-radius: 0;
+		box-shadow: none;
+	}
+}
+
+/*____________________________________________________________
+## @media 375px
+____________________________________________________________*/
+@media screen and (max-width: 375px) {
+	.player {
+		width: 375px;
+		height: 667px;
+	}
+	.contentWrapper {
+		width: 316px;
+		height: 613px;
+	}
+	.musicSwitch {
+		height: 38px;
+		width: 294px;
+
+		._prev,
+		._next {
+			width: 38px;
+			height: 38px;
+		}
+		._prev {
+			&:before {
+				background-position: 7px center;
+			}
+		}
+		._next {
+			&:before {
+				background-position: 8.6px center;
+			}
+		}
+	}
+	.album {
+		top: 74.5px;
+		width: 260px;
+		height: 260px;
+
+		&__internal {
+			margin-top: 39px;
+			width: 182px;
+			height: 182px;
+		}
+	}
+	.musicInfo {
+		top: 390px;
+		width: 160px;
+		height: 50px;
+
+		&__name {
+			font-size: 26px;
+			margin-bottom: 7px;
+		}
+		&__author {
+			font-size: 13px;
+		}
+	}
+	.musicTime {
+		top: 471px;
+		width: 294px;
+		height: 13px;
+
+		&__current,
+		&__last {
+			font-size: 13px;
+		}
+	}
+	.musicBar {
+		top: 497px;
+		width: 294px;
+		height: 6px;
+
+		&__circle {
+			margin-top: -8.6px;
+			margin-right: -11px;
+			width: 23px;
+			height: 23px;
+		}
+		&__circlePoint {
+			width: 9.5px;
+			height: 9.5px;
+		}
+	}
+	.musicOrder {
+		bottom: 19.5px;
+		height: 19px;
+
+		&__loop,
+		&__shuffle {
+			width: 25px;
+		}
+	}
+	.musicControl {
+		width: 221px;
+		height: 58px;
+
+		&__play {
+			&._pause {
+				&:before {
+					background-position: 15.5px center;
+				}
+			}
+		}
+		&__play {
+			&._play {
+				&:before {
+					background-position: 17px center;
+				}
+			}
+		}
+		&__backward,
+		&__play {
+			margin-right: 23.4px;
+		}
+		&__backward,
+		&__play,
+		&__forward {
+			width: 58px;
+			height: 58px;
+		}
+		&__backward {
+			&:before {
+				background-position: 10px center;
+			}
+		}
+		&__forward {
+			&:before {
+				background-position: 14px center;
+			}
+		}
+	}
+}
+
+/*____________________________________________________________
+## @media 320px
+____________________________________________________________*/
+@media screen and (max-width: 320px) {
+	.player {
+		width: 320px;
+		height: 568px;
+	}
+	.contentWrapper {
+		width: 270px;
+		height: 523px;
+	}
+	.musicSwitch {
+		height: 32.5px;
+		width: 251px;
+
+		._prev,
+		._next {
+			width: 32.5px;
+			height: 32.5px;
+		}
+		._prev {
+			&:before {
+				background-position: 6px center;
+			}
+		}
+		._next {
+			&:before {
+				background-position: 7.4px center;
+			}
+		}
+	}
+	.album {
+		top: 63.6px;
+		width: 222px;
+		height: 222px;
+
+		&__internal {
+			margin-top: 33.3px;
+			width: 155px;
+			height: 155px;
+		}
+	}
+	.musicInfo {
+		top: 333px;
+		width: 136.7px;
+		height: 43px;
+
+		&__name {
+			font-size: 22px;
+			margin-bottom: 6px;
+		}
+		&__author {
+			font-size: 11px;
+		}
+	}
+	.musicTime {
+		top: 402px;
+		width: 251px;
+		height: 11px;
+
+		&__current,
+		&__last {
+			font-size: 11px;
+		}
+	}
+	.musicBar {
+		top: 423px;
+		width: 251px;
+		height: 5px;
+
+		&__circle {
+			margin-top: -7.4px;
+			margin-right: -9.6px;
+			width: 20px;
+			height: 20px;
+		}
+		&__circlePoint {
+			width: 8px;
+			height: 8px;
+		}
+	}
+	.musicOrder {
+		bottom: 16.8px;
+		height: 16.3px;
+
+		&__loop,
+		&__shuffle {
+			width: 20.5px;
+		}
+	}
+	.musicControl {
+		width: 188.5px;
+		height: 49.5px;
+
+		&__play {
+			&._pause {
+				&:before {
+					background-position: 13.3px center;
+				}
+			}
+		}
+		&__play {
+			&._play {
+				&:before {
+					background-position: 14.8px center;
+				}
+			}
+		}
+		&__backward,
+		&__play {
+			margin-right: 20px;
+		}
+		&__backward,
+		&__play,
+		&__forward {
+			width: 49.5px;
+			height: 49.5px;
+		}
+		&__backward {
+			&:before {
+				background-position: 8.9px center;
+			}
+		}
+		&__forward {
+			&:before {
+				background-position: 11.8px center;
+			}
+		}
+	}
+}
+
+/*____________________________________________________________
+## @media Height 850px
+____________________________________________________________*/
+@media screen and (min-width: 433px) and (max-height: 850px) {
+	.player {
+		transform: translate(-50%, -50%) scale(.8);
+	}
+}
+
+/*____________________________________________________________
+## @media Height 690px
+____________________________________________________________*/
+@media screen and (min-width: 433px) and (max-height: 690px) {
+	.player {
+		transform: translate(-50%, -50%) scale(.6);
+	}
+}
+
+/*____________________________________________________________
+## @media Height 530px
+____________________________________________________________*/
+@media screen and (min-width: 433px) and (max-height: 530px) {
+	.player {
+		transform: translate(-50%, -50%) scale(.4);
+	}
+}
+
+/*____________________________________________________________
+## @media Height 360px
+____________________________________________________________*/
+@media screen and (min-width: 433px) and (max-height: 360px) {
+	.player {
+		transform: translate(-50%, -50%) scale(.35);
+	}
+}
+
+/*____________________________________________________________
+## @media Height 300px
+____________________________________________________________*/
+@media screen and (min-width: 433px) and (max-height: 300px) {
+	.player {
+		transform: translate(-50%, -50%) scale(.25);
+	}
+}
+
+/*____________________________________________________________
+## @media Height 230px
+____________________________________________________________*/
+@media screen and (min-width: 433px) and (max-height: 230px) {
+	.player {
+		transform: translate(-50%, -50%) scale(.15);
+	}
+}
+
+/*____________________________________________________________
+# Social links
+____________________________________________________________*/
+.social {
+	position: fixed;
+	bottom: 0;
+	left: 30px;
+}
+.socialList {
+	list-style: none;
+	
+	&:after {
+		content: '';
+		display: block;
+		margin: 0 auto;
+		width: 1px;
+		height: 40px;
+		background: #749064;
+	}
+}
+.socialList__item {
+	margin-bottom: 10px;
+	width: 20px;
+	height: 20px;
+	transition: transform .2s;
+	
+	&:hover {
+		transform: translateY(-3px);
+		
+		.socialList__icon {
+			stroke: #7dcbd8;
+		}
+	}
+}
+
+.socialList__icon {
+	fill: none;
+	stroke: #749064;
+}
