@@ -156,8 +156,8 @@ body {
   cursor: pointer;
   font-size: 1rem;
   color: #2b2929;
-  background: #DEEAF6;
-  box-shadow: -0.5rem -0.5rem 0.9375rem #F3F9FF, 0.5rem 0.5rem 0.9375rem #BECBD8;
+  background: #d6e5f4;
+  box-shadow: inset -0.5rem -0.5rem 0.9375rem #F3F9FF, inset 0.5rem 0.5rem 0.9375rem #BECBD8;
   transition: all 0.3s ease;
   flex: 1;
   min-width: 100px;
@@ -168,12 +168,10 @@ body {
   appearance: none;
   outline: none;
   -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
-  outline: none; /* Removes focus outline */
-}
-.footer-button:focus {
-  outline: none;
 }
 .footer-button:hover {
+  background: #DEEAF6;
+  box-shadow: -0.5rem -0.5rem 0.9375rem #F3F9FF, 0.5rem 0.5rem 0.9375rem #BECBD8;
   transform: translateY(-0.125rem);
 }
 .footer-button:active {

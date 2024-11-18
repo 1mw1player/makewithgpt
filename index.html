@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MakeWithGPT - AI Generated Content Gallery</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Add defer to load script after HTML parsing -->
-    <script type="text/javascript" src="script.js" defer></script>
 </head>
-
 <body>
+    <!-- Fixed Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">MakeWithGPT</div>
@@ -23,35 +21,20 @@
         </div>
     </nav>
 
-    <main id="mainContent" class="main-content">
-        <button id="prevBtn" class="nav-btn"></button>
-        <div id="imageContainer"></div>
-        <button id="nextBtn" class="nav-btn"></button>
+    <!-- Main Content Section -->
+    <main class="main-content">
+        <div id="imageContainer">Main Content Goes Here</div>
     </main>
 
+    <!-- Fixed Footer -->
     <footer class="footer">
         <div class="footer-container">
             <button class="footer-button art-btn">Art</button>
-            <button class="footer-button music-btn">Music</button>
+            <a href="audio/index2.html" class="footer-button music-btn">Music</a>
+
             <button class="footer-button shorts-btn">Creative Shorts</button>
             <button class="footer-button games-btn">Games</button>
         </div>
-    </footer>    
-
-    <script>
-        function scrollToBottomOnMobile() {
-            if (window.innerWidth <= 768) {
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: document.body.scrollHeight,
-                        behavior: 'smooth'
-                    });
-                }, 100); // Adjust delay as needed
-            }
-        }
-
-        window.addEventListener('load', scrollToBottomOnMobile);
-        window.addEventListener('resize', scrollToBottomOnMobile); // Handle dynamic viewport changes
-    </script>
+    </footer>
 </body>
 </html>

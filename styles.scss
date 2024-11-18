@@ -182,32 +182,26 @@ body {
   cursor: pointer;
   font-size: 1rem;
   color: $text-color;
-  @include neomorphic-out;
+  @include neomorphic-in; // Start with the inset effect
   transition: all 0.3s ease;
   flex: 1;
   min-width: 100px;
   max-width: 200px;
-  background: $background; 
-  -webkit-appearance: none;  // For Safari
-  -moz-appearance: none;     // For Firefox
-  appearance: none; 
-  outline: none;         // Standard
+  background: $background;
+  -webkit-appearance: none; // For Safari
+  -moz-appearance: none;    // For Firefox
+  appearance: none;
+  outline: none; // Standard
   -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
-  outline: none; /* Removes focus outline */
-  
-  
-  // ... rest of the existing properties
-  &:focus {
-    outline: none;
-}
 
   &:hover {
-    transform: translateY(-0.125rem);
+    @include neomorphic-out; // Change to the "out" effect on hover
+    transform: translateY(-0.125rem); // Optional lift effect
   }
 
   &:active {
-    @include neomorphic-in;
-    transform: translateY(0);
+    @include neomorphic-in; // Return to "inset" effect when clicked
+    transform: translateY(0); // Optional click effect
   }
 }
 
