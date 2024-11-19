@@ -42,19 +42,23 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 10px;
   transition: all 0.3s ease;
-}
-.logo:hover {
   background: #DEEAF6;
   box-shadow: -0.5rem -0.5rem 0.9375rem #F3F9FF, 0.5rem 0.5rem 0.9375rem #BECBD8;
 }
-.logo:active {
+.logo:hover {
   background: #d6e5f4;
   box-shadow: inset -0.5rem -0.5rem 0.9375rem #F3F9FF, inset 0.5rem 0.5rem 0.9375rem #BECBD8;
+}
+.logo:active {
+  background: #DEEAF6;
+  box-shadow: -0.5rem -0.5rem 0.9375rem #F3F9FF, 0.5rem 0.5rem 0.9375rem #BECBD8;
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
+  background: #DEEAF6;
+  box-shadow: -0.5rem -0.5rem 0.9375rem #F3F9FF, 0.5rem 0.5rem 0.9375rem #BECBD8;
 }
 .nav-links a {
   text-decoration: none;

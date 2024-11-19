@@ -71,19 +71,21 @@ body {
   padding: 0.5rem 1rem;
   border-radius: $border-radius;
   transition: all 0.3s ease;
+  @include neomorphic-out;
 
   &:hover {
-    @include neomorphic-out;
+    @include neomorphic-in;
   }
 
   &:active {
-    @include neomorphic-in;
+    @include neomorphic-out;
   }
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
+  @include neomorphic-out;
 
   a {
     text-decoration: none;
