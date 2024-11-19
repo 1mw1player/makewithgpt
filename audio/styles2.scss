@@ -36,7 +36,279 @@ $paletteControlButtons:  #749064;
 
 $paletteLightShadow: #fff;
 $paletteDarkShadow: #ccc;
+// Variables
+$background: #DEEAF6;
+$shadow-light: #F3F9FF;
+$shadow-dark: #BECBD8;
+$text-color: #2b2929;
+$border-radius: 10px;
+$nav-height: 4.375rem;
+$footer-height: 3.75rem;
 
+// Mixins
+@mixin neomorphic-out {
+  background: $background;
+  box-shadow: -0.5rem -0.5rem 0.9375rem $shadow-light,
+              0.5rem 0.5rem 0.9375rem $shadow-dark;
+}
+
+@mixin neomorphic-in {
+  background: darken($background, 2%);
+  box-shadow: inset -0.5rem -0.5rem 0.9375rem $shadow-light,
+              inset 0.5rem 0.5rem 0.9375rem $shadow-dark;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Base styles
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $background;
+  font-family: 'Roboto', sans-serif;
+  color: $text-color;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
+  outline: none; 
+}
+
+// Navbar styles
+.navbar {
+  height: $nav-height;
+  padding: 0 2rem;
+  @include neomorphic-out;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.nav-container {
+  max-width: 75rem;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  transition: all 0.3s ease;
+
+  &:hover {
+    @include neomorphic-out;
+  }
+
+  &:active {
+    @include neomorphic-in;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+
+  a {
+    text-decoration: none;
+    color: $text-color;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    transition: all 0.3s ease;
+
+    &:hover {
+      @include neomorphic-out;
+    }
+
+    &:active {
+      @include neomorphic-in;
+    }
+  }
+}
+
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: $border-radius;
+
+  &:hover {
+    @include neomorphic-out;
+  }
+
+  &:active {
+    @include neomorphic-in;
+  }
+}
+
+// Main content styles
+.main-content {
+  flex: 1;
+  margin-top: calc($nav-height + 2rem);
+  padding: 2rem;
+  @include flex-center;
+  gap: 2rem;
+  min-height: calc(100vh - #{$nav-height} - #{$footer-height} - 4rem);
+  box-sizing: border-box;
+}
+
+#imageContainer {
+  width: 80%;
+  max-width: 62.5rem;
+  aspect-ratio: 16/9;
+  @include neomorphic-in;
+  border-radius: $border-radius;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.nav-btn {
+  width: 3.125rem;
+  height: 3.125rem;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  @include neomorphic-out;
+  color: $text-color;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    @include neomorphic-in;
+    transform: scale(0.95);
+  }
+}
+
+// Footer styles
+.footer {
+  width: 100%;
+  min-height: $footer-height;
+  height: auto;
+  @include neomorphic-out;
+  margin-top: auto;
+}
+
+.footer-container {
+  padding: 1rem;
+  @include flex-center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  font-size: 1rem;
+  color: $text-color;
+  @include neomorphic-out;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 100px;
+  max-width: 200px;
+  background: $background; 
+  -webkit-appearance: none;  // For Safari
+  -moz-appearance: none;     // For Firefox
+  appearance: none; 
+  outline: none;         // Standard
+  -webkit-tap-highlight-color: transparent; /* Disables the blue highlight on mobile */
+  outline: none; /* Removes focus outline */
+  text-decoration: none; /* Removes the underline */
+  text-align: center; /* Centers the text */
+  
+  
+  // ... rest of the existing properties
+  &:focus {
+    outline: none;
+}
+
+  &:hover {
+    transform: translateY(-0.125rem);
+  }
+
+  &:active {
+    @include neomorphic-in;
+    transform: translateY(0);
+  }
+}
+
+// Media queries
+@media (max-width: 48rem) {
+  .nav-links {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+
+  #imageContainer {
+    min-height: 300px;
+  }
+
+  .footer-container {
+    gap: 0.5rem;
+    padding: 0.5rem;
+    justify-content: center;
+  }
+
+  .footer-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    min-width: 80px;
+    flex: 0 1 calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 30rem) {
+  .footer-button {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
+
+// Active states for mobile menu
+.nav-links.active {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: $nav-height;
+  left: 0;
+  width: 100%;
+  background: $background;
+  padding: 1rem;
+  @include neomorphic-out;
+
+  a {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
+}
 /*____________________________________________________________
 # Auxiliary styles
 ____________________________________________________________*/
