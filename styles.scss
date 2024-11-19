@@ -110,6 +110,7 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: $border-radius;
+  @include neomorphic-out;
 
   &:hover {
     @include neomorphic-out;

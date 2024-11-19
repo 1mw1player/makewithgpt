@@ -82,6 +82,8 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 10px;
+  background: #DEEAF6;
+  box-shadow: -0.5rem -0.5rem 0.9375rem #F3F9FF, 0.5rem 0.5rem 0.9375rem #BECBD8;
 }
 .hamburger:hover {
   background: #DEEAF6;
